@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="HostingWPFUserControl.UserControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:PresentationOptions="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+             xmlns:local="clr-namespace:HostingWPFUserControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:SinConverter x:Key="sinConverter" />
+        <RotateTransform x:Key="rotate" Angle="0" />
+    </UserControl.Resources>
+    <Grid>
+        <Rectangle Width="30" Height="30" Fill="Blue">
+            <Rectangle.RenderTransform>
+                <TranslateTransform X="{Binding Path=Angle,
+                                                Source={StaticResource rotate},
+                                                Converter={StaticResource sinConverter},
+                                                ConverterParameter=100}"
+                                    Y="{Binding Path=Angle,
+                                                Source={StaticResource rotate},
+                                                Converter={StaticResource sinConverter},
+                                                ConverterParameter=60}"/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Ellipse Width="5" Height="5" Fill="White" Stroke="Black" StrokeThickness="1" />
+    </Grid>
+    <UserControl.Style>
+        <Style>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="UserControl.Loaded">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard Name="sstoryboard">
+                                <DoubleAnimation Name="animation"
+                                         Storyboard.Target="{StaticResource rotate}"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="0" To="360" Duration="0:0:5"
+                                         RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+</UserControl>
