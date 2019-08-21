@@ -15,20 +15,22 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Annotations;
 
-namespace SatSim.Methods.TLE_Scrap
+using SatSim.Methods.TLE_Data;
+using SatSim.Methods.TLE_Scrap;
+
+namespace SatSim.Forms
 {
 	public partial class SelectedSatOrbit_form : Form
 	{
-		public static TLE_DataSet _tle_dataset;
+		public static TLE_MultiSat_DataSet _tle_dataset;
 		public static TLE_Scrap _tle_scrap;
-		public Sat_Constants _sat_constants = new Sat_Constants();
 
 		PlotView _main_plot = new PlotView();
 		PlotModel orbitModel = new PlotModel();
 
 		#region Singleton
 		private static SelectedSatOrbit_form _instance;
-		public static SelectedSatOrbit_form GetInstance(TLE_Scrap tle_scrap, TLE_DataSet tle_dataset)
+		public static SelectedSatOrbit_form GetInstance(TLE_Scrap tle_scrap, TLE_MultiSat_DataSet tle_dataset)
 		{
 			_tle_dataset = tle_dataset;
 			_tle_scrap = tle_scrap;
@@ -107,8 +109,8 @@ namespace SatSim.Methods.TLE_Scrap
 			OxyPlot.Annotations.EllipseAnnotation earth = new OxyPlot.Annotations.EllipseAnnotation();
 
 			earth.Fill = OxyColor.FromRgb(0, 0, 0);
-			earth.Width = 2 * _sat_constants.EARTH_RADIOUS_constant * 1000;
-			earth.Height = 2 * _sat_constants.EARTH_RADIOUS_constant * 1000;
+			earth.Width = 2 * Sat_Constants.EARTH_RADIOUS_constant * 1000;
+			earth.Height = 2 * Sat_Constants.EARTH_RADIOUS_constant * 1000;
 
 			orbitModel.Annotations.Add(earth);
 

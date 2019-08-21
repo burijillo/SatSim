@@ -34,6 +34,8 @@
 			this.MainFormMenuStrip = new System.Windows.Forms.MenuStrip();
 			this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.loadDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.historicTLEDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.tLEDataSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.button1 = new System.Windows.Forms.Button();
 			this.MainFormToolStrip = new System.Windows.Forms.ToolStrip();
 			this.TLELoadedEventToolStripLabel = new System.Windows.Forms.ToolStripLabel();
@@ -52,7 +54,8 @@
 			// MainFormMenuStrip
 			// 
 			this.MainFormMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configurationToolStripMenuItem});
+            this.configurationToolStripMenuItem,
+            this.historicTLEDataToolStripMenuItem});
 			this.MainFormMenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.MainFormMenuStrip.Name = "MainFormMenuStrip";
 			this.MainFormMenuStrip.Size = new System.Drawing.Size(800, 24);
@@ -69,9 +72,24 @@
 			// loadDatabaseToolStripMenuItem
 			// 
 			this.loadDatabaseToolStripMenuItem.Name = "loadDatabaseToolStripMenuItem";
-			this.loadDatabaseToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-			this.loadDatabaseToolStripMenuItem.Text = "Load Database";
+			this.loadDatabaseToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+			this.loadDatabaseToolStripMenuItem.Text = "Load Actual Database";
 			this.loadDatabaseToolStripMenuItem.Click += new System.EventHandler(this.loadDatabaseToolStripMenuItem_Click);
+			// 
+			// historicTLEDataToolStripMenuItem
+			// 
+			this.historicTLEDataToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tLEDataSelectionToolStripMenuItem});
+			this.historicTLEDataToolStripMenuItem.Name = "historicTLEDataToolStripMenuItem";
+			this.historicTLEDataToolStripMenuItem.Size = new System.Drawing.Size(109, 20);
+			this.historicTLEDataToolStripMenuItem.Text = "Historic TLE Data";
+			// 
+			// tLEDataSelectionToolStripMenuItem
+			// 
+			this.tLEDataSelectionToolStripMenuItem.Name = "tLEDataSelectionToolStripMenuItem";
+			this.tLEDataSelectionToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+			this.tLEDataSelectionToolStripMenuItem.Text = "TLE Data Selection";
+			this.tLEDataSelectionToolStripMenuItem.Click += new System.EventHandler(this.tLEDataSelectionToolStripMenuItem_Click);
 			// 
 			// button1
 			// 
@@ -210,6 +228,8 @@
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+		private System.Windows.Forms.ToolStripMenuItem historicTLEDataToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem tLEDataSelectionToolStripMenuItem;
 	}
 }
 

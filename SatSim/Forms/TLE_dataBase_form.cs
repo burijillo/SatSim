@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using SatSim.WaitForm;
+using SatSim.Forms;
+using SatSim.Methods.TLE_Data;
 
 namespace SatSim.Methods.TLE_Scrap
 {
@@ -31,12 +33,12 @@ namespace SatSim.Methods.TLE_Scrap
 		public event EventHandler _tle_sat_selected_event;
 		Stopwatch sw;
 
-		public static TLE_DataSet _tle_dataset;
+		public static TLE_MultiSat_DataSet _tle_dataset;
 		public static TLE_Scrap _tle_scrap;
 
 		#region Singleton
 		private static TLE_dataBase_form _instance;
-		public static TLE_dataBase_form GetInstance(TLE_Scrap tle_scrap, TLE_DataSet tle_dataset)
+		public static TLE_dataBase_form GetInstance(TLE_Scrap tle_scrap, TLE_MultiSat_DataSet tle_dataset)
 		{
 			_tle_dataset = tle_dataset;
 			_tle_scrap = tle_scrap;

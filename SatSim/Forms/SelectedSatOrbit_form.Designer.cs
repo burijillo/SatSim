@@ -1,4 +1,4 @@
-﻿namespace SatSim.Methods.TLE_Scrap
+﻿namespace SatSim.Forms
 {
 	partial class SelectedSatOrbit_form
 	{

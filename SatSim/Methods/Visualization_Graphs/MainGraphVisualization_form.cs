@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using SatSim.Methods.TLE_Scrap;
+using SatSim.Methods.TLE_Data;
 using SatSim.Methods.TimeSeries;
 
 namespace SatSim.Visualization_Graphs
@@ -19,7 +20,7 @@ namespace SatSim.Visualization_Graphs
 	{
 		public List<Color> chartColor_list = new List<Color>(new Color[] { Color.Red, Color.Blue, Color.Green, Color.Black, Color.Orange, Color.Brown, Color.Purple });
 
-		public static TLE_DataSet _tle_dataset;
+		public static TLE_MultiSat_DataSet _tle_dataset;
 		public static TLE_Scrap _tle_scrap;
 
 		TimeSeries_calcs _timeSeries_calc;
@@ -32,7 +33,7 @@ namespace SatSim.Visualization_Graphs
 		#region Singleton
 		private static MainGraphVisualization_form _instance;
 
-		public static MainGraphVisualization_form GetInstance(TLE_Scrap tle_scrap, TLE_DataSet tle_dataset)
+		public static MainGraphVisualization_form GetInstance(TLE_Scrap tle_scrap, TLE_MultiSat_DataSet tle_dataset)
 		{
 			_tle_dataset = tle_dataset;
 			_tle_scrap = tle_scrap;

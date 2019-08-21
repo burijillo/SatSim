@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace SatSim.Methods.TLE_Scrap
+namespace SatSim.Methods.TLE_Data
 {
 	public enum tle_sat_variables : uint
 	{
@@ -81,8 +81,8 @@ namespace SatSim.Methods.TLE_Scrap
 
 	public class Sat_Constants
 	{
-		public double G_constant = 6.67259E-11;
-		public double EARTH_MASS_constant = 5.972E24;
-		public double EARTH_RADIOUS_constant = 6371;
+		public static double G_constant = 6.67259E-11;
+		public static double EARTH_MASS_constant = 5.972E24;
+		public static double EARTH_RADIOUS_constant = 6371;
 	}
 }

@@ -7,18 +7,17 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing;
 
-using SatSim.Methods.TLE_Scrap;
+using SatSim.Methods.TLE_Data;
 
 namespace SatSim.Methods.TimeSeries
 {
 	public class TimeSeries_calcs
 	{
-		TLE_DataSet _tle_dataSet;
-		Sat_Constants _sat_constants = new Sat_Constants();
+		TLE_MultiSat_DataSet _tle_dataSet;
 
 		public TimeSeries_calcs()
 		{
-			_tle_dataSet = TLE_DataSet.GetInstance();
+			_tle_dataSet = TLE_MultiSat_DataSet.GetInstance();
 		}
 
 		#region Main handler
@@ -130,7 +129,7 @@ namespace SatSim.Methods.TimeSeries
 				List<PointF> radious_serie = _tle_dataSet._TLE_Sat_Selected.Sat_Radious_series;
 
 				float a = (float)_tle_dataSet._TLE_Sat_Selected.Sat_SemiAxis;
-				float aux_val = (float)Math.Sqrt(_sat_constants.EARTH_MASS_constant * _sat_constants.G_constant);
+				float aux_val = (float)Math.Sqrt(Sat_Constants.EARTH_MASS_constant * Sat_Constants.G_constant);
 
 				List<PointF> result = new List<PointF>();
 				for (int i = 0; i < iterations; i++)

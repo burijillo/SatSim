@@ -7,24 +7,23 @@ using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace SatSim.Methods.TLE_Scrap
+namespace SatSim.Methods.TLE_Data
 {
-	public class TLE_DataSet
+	public class TLE_MultiSat_DataSet
 	{
 		public List<TLE_Sat> _TLE_Sat_List = new List<TLE_Sat>();
 		public DataSet _TLE_Sat_DataSet = new DataSet();
 		public TLE_Sat _TLE_Sat_Selected = new TLE_Sat();
-		public Sat_Constants _sat_constants = new Sat_Constants();
 
 		public bool _TLE_LOADED = false;
 		public bool _SAT_SELECTED = false;
 
 		#region Singleton
 
-		private static TLE_DataSet _instance;
-		public static TLE_DataSet GetInstance()
+		private static TLE_MultiSat_DataSet _instance;
+		public static TLE_MultiSat_DataSet GetInstance()
 		{
-			if (_instance == null) _instance = new TLE_DataSet();
+			if (_instance == null) _instance = new TLE_MultiSat_DataSet();
 			return _instance;
 		}
 
@@ -56,17 +55,17 @@ namespace SatSim.Methods.TLE_Scrap
 						tle_sat.Sat_IntDesignator = (System.Text.Encoding.Default.GetString(buffer)).Substring(9, 8);
 						tle_sat.Sat_ElementSetEpoch = (System.Text.Encoding.Default.GetString(buffer)).Substring(18, 14);
 						tle_sat.Sat_FirstMeanMotionDer = Convert.ToDouble((System.Text.Encoding.Default.GetString(buffer)).Substring(33, 10), System.Globalization.CultureInfo.InvariantCulture);
-						tle_sat.Sat_SecMeanMotionDer = GetDoubleFromScientificNotation((System.Text.Encoding.Default.GetString(buffer)).Substring(44, 8));
-						tle_sat.Sat_BSTARDrag = GetDoubleFromScientificNotation((System.Text.Encoding.Default.GetString(buffer)).Substring(53, 8));
+						tle_sat.Sat_SecMeanMotionDer = TLE_Data_AuxMethods.GetDoubleFromScientificNotation((System.Text.Encoding.Default.GetString(buffer)).Substring(44, 8));
+						tle_sat.Sat_BSTARDrag = TLE_Data_AuxMethods.GetDoubleFromScientificNotation((System.Text.Encoding.Default.GetString(buffer)).Substring(53, 8));
 						tle_sat.Sat_SetType = (System.Text.Encoding.Default.GetString(buffer)).Substring(62, 1);
 						tle_sat.Sat_SetNumber = (System.Text.Encoding.Default.GetString(buffer)).Substring(64, 4);
 
 						// Processed items
-						tle_sat.Sat_LaunchYear = GetLaunchYearFromDesignator(tle_sat.Sat_IntDesignator);
-						tle_sat.Sat_LaunchNumber = GetLaunchNumberFromDesignator(tle_sat.Sat_IntDesignator);
-						tle_sat.Sat_LaunchPiece = GetLaunchPieceFromDesignator(tle_sat.Sat_IntDesignator);
-						tle_sat.Sat_EpochYear = GetYearFromEpoch(tle_sat.Sat_ElementSetEpoch);
-						tle_sat.Sat_EpochDay = GetDayFromEpoch(tle_sat.Sat_ElementSetEpoch);
+						tle_sat.Sat_LaunchYear = TLE_Data_AuxMethods.GetLaunchYearFromDesignator(tle_sat.Sat_IntDesignator);
+						tle_sat.Sat_LaunchNumber = TLE_Data_AuxMethods.GetLaunchNumberFromDesignator(tle_sat.Sat_IntDesignator);
+						tle_sat.Sat_LaunchPiece = TLE_Data_AuxMethods.GetLaunchPieceFromDesignator(tle_sat.Sat_IntDesignator);
+						tle_sat.Sat_EpochYear = TLE_Data_AuxMethods.GetYearFromEpoch(tle_sat.Sat_ElementSetEpoch);
+						tle_sat.Sat_EpochDay = TLE_Data_AuxMethods.GetDayFromEpoch(tle_sat.Sat_ElementSetEpoch);
 
 						Array.Clear(buffer, 0, buffer.Length);
 						_internal_counter = 0;
@@ -292,7 +291,7 @@ namespace SatSim.Methods.TLE_Scrap
 				result.Sat_EpochYear = Convert.ToUInt32(input_dataRow.ItemArray[21]);
 				result.Sat_EpochDay = Convert.ToDouble(input_dataRow.ItemArray[22]);
 
-				result.Sat_SemiAxis = GetSemiAxisFromPeriod(result.Sat_MeanMotion);
+				result.Sat_SemiAxis = TLE_Data_AuxMethods.GetSemiAxisFromPeriod(result.Sat_MeanMotion);
 
 				_TLE_Sat_Selected = result;
 
@@ -305,157 +304,5 @@ namespace SatSim.Methods.TLE_Scrap
 				return false;
 			}
 		}
-
-		#region Aux methods
-
-		public uint GetLaunchYearFromDesignator(string designator)
-		{
-			try
-			{
-				uint result = 0;
-
-				if (!string.IsNullOrWhiteSpace(designator))
-				{
-					uint _sub_designator = Convert.ToUInt32(designator.Substring(0, 2));
-
-					if (_sub_designator >= 57) result = 1900 + _sub_designator;
-					else result = 2000 + _sub_designator; 
-				}
-
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				return 0;
-			}
-		}
-
-		public uint GetLaunchNumberFromDesignator(string designator)
-		{
-			try
-			{
-				uint result = 0;
-
-				if (!string.IsNullOrWhiteSpace(designator))
-				{
-					result = Convert.ToUInt32(designator.Substring(2, 3));
-				}
-
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				return 0;
-			}
-		}
-		public string GetLaunchPieceFromDesignator(string designator)
-		{
-			try
-			{
-				string result = "";
-
-				if (!string.IsNullOrWhiteSpace(designator))
-				{
-					result = designator.Substring(5, 3);
-				}
-
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				return null;
-			}
-		}
-
-		public double GetDoubleFromScientificNotation(string input_data)
-		{
-			try
-			{
-				double result = 0.0;
-
-				if (!string.IsNullOrWhiteSpace(input_data))
-				{
-					input_data = input_data.Insert(input_data.Length - 2, "E");
-					result = Convert.ToDouble(input_data, System.Globalization.CultureInfo.InvariantCulture);
-				}
-
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				return 0.0;
-			}
-		}
-
-		public uint GetYearFromEpoch(string epoch)
-		{
-			try
-			{
-				uint result = 0;
-
-
-				if (!string.IsNullOrWhiteSpace(epoch))
-				{
-					uint _sub_designator = Convert.ToUInt32(epoch.Substring(0, 2));
-
-					if (_sub_designator >= 57) result = 1900 + _sub_designator;
-					else result = 2000 + _sub_designator;
-				}
-
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				return 0;
-			}
-		}
-
-		public double GetDayFromEpoch(string epoch)
-		{
-			try
-			{
-				double result = 0.0;
-
-				if (!string.IsNullOrWhiteSpace(epoch))
-				{
-					result = Convert.ToDouble(epoch.Substring(2, 12), System.Globalization.CultureInfo.InvariantCulture);
-				}
-
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				return 0.0;
-			}
-		}
-
-		public double GetSemiAxisFromPeriod(double mean_motion)
-		{
-			try
-			{
-				double result = 0.0;
-
-				// (Seconds in a day) / (mean_motion)
-				double period = (double)(60 * 60 * 24) / mean_motion;
-
-				double prev_op = (_sat_constants.EARTH_MASS_constant * _sat_constants.G_constant * Math.Pow(period, 2)) / (4 * Math.Pow(Math.PI, 2));
-				result = Math.Pow(prev_op, ((double)1 / (double)3));
-
-				return result;
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex.ToString());
-				return 0.0;
-			}
-		}
-
-		#endregion
 	}
 }

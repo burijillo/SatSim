@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,9 @@ using System.Diagnostics;
 using System.Windows.Forms.DataVisualization.Charting;
 
 using SatSim.Methods.TLE_Scrap;
+using SatSim.Methods.TLE_Data;
 using SatSim.WaitForm;
+using SatSim.Forms;
 using SatSim.Visualization_3D;
 using SatSim.Visualization_Graphs;
 
@@ -19,7 +22,7 @@ namespace SatSim
 {
 	public partial class MainForm : Form
 	{
-		public TLE_DataSet tle_dataset;
+		public TLE_MultiSat_DataSet tle_dataset;
 		public TLE_Scrap tle_scrap;
 
 		TLE_dataBase_form tle_database_form;
@@ -32,7 +35,7 @@ namespace SatSim
 			InitializeComponent();
 
 			tle_scrap = new TLE_Scrap();
-			tle_dataset = TLE_DataSet.GetInstance();
+			tle_dataset = TLE_MultiSat_DataSet.GetInstance();
 
 			tle_database_form = TLE_dataBase_form.GetInstance(tle_scrap, tle_dataset);
 			mainGraphVisualization_form = MainGraphVisualization_form.GetInstance(tle_scrap, tle_dataset);
@@ -125,6 +128,29 @@ namespace SatSim
 			else
 			{
 				mainGraphVisualization_form.BringToFront();
+			}
+		}
+
+		private void tLEDataSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//***********************************
+			// Solucion momentanea sin conexion a internet
+			//***********************************
+
+			byte[] input_raw;
+			input_raw = File.ReadAllBytes(@"C:\SatSim\TLE_ind.txt");
+
+			//***********************************
+			//***********************************
+
+			List<byte[]> _raw_bytes_divided = TLE_IndividualSat_DataSet.TLE_Lines_Divider(input_raw);
+			List<TLE_Sat> TLE_individualSat_List = TLE_IndividualSat_DataSet.TLE_Lines_DataExtractor(_raw_bytes_divided);
+
+			int count = 1;
+			foreach (var item in TLE_individualSat_List)
+			{
+				Debug.WriteLine("Counter " + count + ": " + item.Sat_Inclination);
+				count++;
 			}
 		}
 	}
