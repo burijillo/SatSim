@@ -26,6 +26,7 @@ namespace SatSim
 		public TLE_Scrap tle_scrap;
 
 		TLE_dataBase_form tle_database_form;
+        TLE_HistoricSelectedSatInfo_form tle_historic_form;
 		MainVisualization_form main3DVisualization_form;
 		MainGraphVisualization_form mainGraphVisualization_form;
 
@@ -39,6 +40,9 @@ namespace SatSim
 
 			tle_database_form = TLE_dataBase_form.GetInstance(tle_scrap, tle_dataset);
 			mainGraphVisualization_form = MainGraphVisualization_form.GetInstance(tle_scrap, tle_dataset);
+
+            // Only when a satellite is selected this form would be available
+            historicTLEDataToolStripMenuItem.Enabled = false;
 
 			tle_database_form._tle_loaded_event += _tle_loaded_triggered;
 			tle_database_form._tle_sat_selected_event += _tle_sat_selected_triggered;
@@ -71,11 +75,29 @@ namespace SatSim
 		{
 			SatSelectedEventToolStripLabel.Text = tle_dataset._TLE_Sat_Selected.Sat_Name;
 			SatSelectedEventToolStripLabel.BackColor = Color.LightGreen;
+
+            historicTLEDataToolStripMenuItem.Enabled = true;
 		}
 
-		#endregion
+        #endregion
 
-		private void button1_Click(object sender, EventArgs e)
+        #region Historic TLE
+        private void tLEDataSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tle_historic_form = TLE_HistoricSelectedSatInfo_form.GetInstance(tle_scrap, tle_dataset);
+            if (!tle_historic_form.Visible)
+            {
+                tle_historic_form.Show();
+            }
+            else
+            {
+                tle_historic_form.BringToFront();
+            }
+        }
+
+        #endregion
+
+        private void button1_Click(object sender, EventArgs e)
 		{
 			main3DVisualization_form = MainVisualization_form.GetInstance();
 			if (!main3DVisualization_form.Visible)
@@ -128,29 +150,6 @@ namespace SatSim
 			else
 			{
 				mainGraphVisualization_form.BringToFront();
-			}
-		}
-
-		private void tLEDataSelectionToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			//***********************************
-			// Solucion momentanea sin conexion a internet
-			//***********************************
-
-			byte[] input_raw;
-			input_raw = File.ReadAllBytes(@"C:\SatSim\TLE_ind.txt");
-
-			//***********************************
-			//***********************************
-
-			List<byte[]> _raw_bytes_divided = TLE_IndividualSat_DataSet.TLE_Lines_Divider(input_raw);
-			List<TLE_Sat> TLE_individualSat_List = TLE_IndividualSat_DataSet.TLE_Lines_DataExtractor(_raw_bytes_divided);
-
-			int count = 1;
-			foreach (var item in TLE_individualSat_List)
-			{
-				Debug.WriteLine("Counter " + count + ": " + item.Sat_Inclination);
-				count++;
 			}
 		}
 	}

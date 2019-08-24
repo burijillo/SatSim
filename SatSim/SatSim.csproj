@@ -61,6 +61,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\TLE_HistoricSelectedSatInfo_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TLE_HistoricSelectedSatInfo_form.Designer.cs">
+      <DependentUpon>TLE_HistoricSelectedSatInfo_form.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +117,9 @@
     <Compile Include="WaitForm\WaitingForm_simpleLine.Designer.cs">
       <DependentUpon>WaitingForm_simpleLine.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\TLE_HistoricSelectedSatInfo_form.resx">
+      <DependentUpon>TLE_HistoricSelectedSatInfo_form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

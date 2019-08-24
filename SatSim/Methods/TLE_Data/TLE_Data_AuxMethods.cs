@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 using System.Diagnostics;
 
 using SatSim.Methods.TLE_Data;
@@ -130,7 +131,7 @@ namespace SatSim.Methods.TLE_Data
 				}
 
 				return result;
-			}
+            }
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex.ToString());
@@ -158,5 +159,30 @@ namespace SatSim.Methods.TLE_Data
 				return 0.0;
 			}
 		}
+
+        public static string GetSatIDfromName(DataTable input_table, string input_name)
+        {
+            try
+            {
+                string result = "";
+
+                foreach(DataRow row in input_table.Rows)
+                {
+                    if (row.ItemArray[1].ToString() == input_name)
+                    {
+                        int index = input_table.Rows.IndexOf(row);
+                        result = row.ItemArray[2].ToString();
+                        return result;
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return null;
+            }
+        }
 	}
 }

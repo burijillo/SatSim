@@ -13,6 +13,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using SatSim.Methods.TLE_Scrap;
 using SatSim.Methods.TLE_Data;
 using SatSim.Methods.TimeSeries;
+using SatSim.Forms;
 
 namespace SatSim.Visualization_Graphs
 {

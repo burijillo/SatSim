@@ -12,8 +12,9 @@ using System.Diagnostics;
 using SatSim.WaitForm;
 using SatSim.Forms;
 using SatSim.Methods.TLE_Data;
+using SatSim.Methods.TLE_Scrap;
 
-namespace SatSim.Methods.TLE_Scrap
+namespace SatSim.Forms
 {
 	public enum FilterType_enum : uint
 	{

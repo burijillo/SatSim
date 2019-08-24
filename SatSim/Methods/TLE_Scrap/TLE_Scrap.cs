@@ -104,7 +104,48 @@ namespace SatSim.Methods.TLE_Scrap
             }
         }
 
-		public string ParseIntDesignator(uint launchYear, uint launchNumber, string launchPiece)
+        public byte[] StartHistoricScrap(string sat_ID, uint dataset_lim)
+        {
+            try
+            {
+                System.Net.WebClient wc = new WebClient();
+
+                wc.Encoding = Encoding.UTF8;
+                wc.UseDefaultCredentials = true;
+                wc.Credentials = CredentialCache.DefaultCredentials;
+                wc.Credentials = new NetworkCredential(@"buro_4@hotmail.com", "buroso89startrack");
+                wc.Headers[HttpRequestHeader.UserAgent] = @"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";
+
+                string uriBase = "https://www.space-track.org";
+                string request = string.Format("https://www.space-track.org/basicspacedata/query/class/tle/NORAD_CAT_ID/{0}/orderby/EPOCH desc/limit/{1}/format/tle", sat_ID, dataset_lim);
+
+                // Create new WebClient object to communicate with the service
+                using (var client = new WebClientEx())
+                {
+                    // Store the user authentication information
+                    var data = new NameValueCollection
+                {
+                    { "identity", @"buro_4@hotmail.com" },
+                    { "password", "buroso89startrack" },
+                };
+
+                    // Generate the URL for the API Query and return the response
+                    var response2 = client.UploadValues(uriBase + "/ajaxauth/login", data);
+                    var response4 = client.DownloadData(request);
+
+                    wc.Dispose();
+
+                    return response4;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+
+        public string ParseIntDesignator(uint launchYear, uint launchNumber, string launchPiece)
 		{
 			string result = "";
 

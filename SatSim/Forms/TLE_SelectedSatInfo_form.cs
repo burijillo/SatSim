@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SatSim.Methods.TLE_Scrap
+using SatSim.Methods.TLE_Scrap;
+
+namespace SatSim.Forms
 {
 	public partial class TLE_SelectedSatInfo_form : Form
 	{
