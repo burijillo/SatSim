@@ -66,9 +66,10 @@ namespace SatSim.Methods.TLE_Data
 				foreach(byte[] byte_arr in data_raw)
 				{
 					TLE_Sat _TLE_sat = new TLE_Sat();
+                    DateTime epoch = new DateTime();
 
-					// First row
-					_TLE_sat.Sat_Number = Convert.ToUInt32((System.Text.Encoding.Default.GetString(byte_arr)).Substring(2, 5));
+                    // First row
+                    _TLE_sat.Sat_Number = Convert.ToUInt32((System.Text.Encoding.Default.GetString(byte_arr)).Substring(2, 5));
 					_TLE_sat.Sat_Classification = (System.Text.Encoding.Default.GetString(byte_arr)).Substring(7, 1);
 					_TLE_sat.Sat_IntDesignator = (System.Text.Encoding.Default.GetString(byte_arr)).Substring(9, 8);
 					_TLE_sat.Sat_ElementSetEpoch = (System.Text.Encoding.Default.GetString(byte_arr)).Substring(18, 14);
@@ -83,9 +84,10 @@ namespace SatSim.Methods.TLE_Data
 					_TLE_sat.Sat_LaunchPiece = TLE_Data_AuxMethods.GetLaunchPieceFromDesignator(_TLE_sat.Sat_IntDesignator);
 					_TLE_sat.Sat_EpochYear = TLE_Data_AuxMethods.GetYearFromEpoch(_TLE_sat.Sat_ElementSetEpoch);
 					_TLE_sat.Sat_EpochDay = TLE_Data_AuxMethods.GetDayFromEpoch(_TLE_sat.Sat_ElementSetEpoch);
+                    if (TLE_Data_AuxMethods.GetDateTimeFromEpoch(_TLE_sat.Sat_ElementSetEpoch, out epoch)) _TLE_sat.Sat_EpochDateTime = epoch;
 
-					// Second row
-					_TLE_sat.Sat_Inclination = Convert.ToDouble((System.Text.Encoding.Default.GetString(byte_arr)).Substring(79, 8), System.Globalization.CultureInfo.InvariantCulture);
+                    // Second row
+                    _TLE_sat.Sat_Inclination = Convert.ToDouble((System.Text.Encoding.Default.GetString(byte_arr)).Substring(79, 8), System.Globalization.CultureInfo.InvariantCulture);
 					_TLE_sat.Sat_RightAscension = Convert.ToDouble((System.Text.Encoding.Default.GetString(byte_arr)).Substring(88, 8), System.Globalization.CultureInfo.InvariantCulture);
 					_TLE_sat.Sat_Eccentricity = Convert.ToDouble(("0." + (System.Text.Encoding.Default.GetString(byte_arr)).Substring(97, 7)), System.Globalization.CultureInfo.InvariantCulture);
 					_TLE_sat.Sat_ArgumentPerigee = Convert.ToDouble((System.Text.Encoding.Default.GetString(byte_arr)).Substring(105, 8), System.Globalization.CultureInfo.InvariantCulture);
@@ -104,5 +106,52 @@ namespace SatSim.Methods.TLE_Data
 				return null;
 			}
 		}
-	}
+
+        /// <summary>
+		/// This method is used to store in a list all processed TLE parameters for each epoch time
+		/// 
+		/// This output list is different from the one obtained from TLE_Lines_DataExtractor in the processing. In this list, each data which is obtained from the same day is promediated, so there are no repeated parameters for the same day. This is made to make clearer all plots and get better referencing.
+		/// Each entry of the return list is a TLE_Sat variable with its parameters defined except for the name (which is not necessary as every entry is related to the same satellite)
+		/// </summary>
+		/// <param name="data_raw">List of array of bytes with every TLE (its two lines) for each entry</param>
+		/// <returns>List of TLE_Sat containing processed data</returns>
+		public static List<TLE_Sat> TLE_HistoricData_Processed(List<TLE_Sat> TLE_List_raw)
+        {
+            try
+            {
+                List<TLE_Sat> TLE_individualSat_List_processed = new List<TLE_Sat>();
+                // This variable is used to compare in case the next epoch_day is repeated. It is initalized with the first entry
+                int _epoch_day_ref = 0;
+                int counter = 0;
+
+                // Check for repeated epoch days
+                foreach (TLE_Sat item in TLE_List_raw)
+                {
+                    // Epoch day of the current TLE_Sat in the iteration
+                    int _epoch_day_current = Convert.ToInt32(Math.Floor(item.Sat_EpochDay));
+                    if (_epoch_day_current == _epoch_day_ref)
+                    {
+                        // In this case as the current epoch day is the same as the ref one, we need to store data to promediate after that
+                        counter++;
+                        Debug.WriteLine("Repeticion numero: " + counter + "; con " + _epoch_day_current);
+                    }
+                    else
+                    {
+                        // In this case as the current epoch day is different from the ref one, this TLE_Sat data will be stored in the processed list
+
+
+                        // Change epoch day reference to be the previous one
+                        _epoch_day_ref = Convert.ToInt32(Math.Floor(item.Sat_EpochDay));
+                    }
+                }
+
+                return TLE_individualSat_List_processed;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+                return null;
+            }
+        }
+    }
 }

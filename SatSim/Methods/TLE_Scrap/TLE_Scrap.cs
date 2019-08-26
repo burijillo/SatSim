@@ -94,8 +94,6 @@ namespace SatSim.Methods.TLE_Scrap
 					//return (System.Text.Encoding.Default.GetString(response4));
 					return response4;
 				}
-
-				//string WebData = wc.DownloadString(@"https://www.space-track.org/basicspacedata/query/class/tle_latest/ORDINAL/1/EPOCH/%3Enow-30/orderby/NORAD_CAT_ID/format/3le");
 			}
             catch (Exception ex)
             {

@@ -52,6 +52,13 @@ namespace SatSim.Forms
 
         #region Main data limit selector
 
+        /// <summary>
+        /// This method searches for TLE information in web
+        /// 
+        /// Once information has been retrieved it shows into a datagridview and different textboxes with information
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchHistoricTLEButton_Click(object sender, EventArgs e)
         {
             try
@@ -72,11 +79,40 @@ namespace SatSim.Forms
                 }
 
                 Debug.WriteLine(string.Format("Sat name: {0}, sat id: {1}", SelectedSatComboBox.Text, TLE_selectedSat_ID));
+
+                FillMainInformationTabDataGridView(TLE_individualSat_List);
+                FillMainInformationTabTextBoxes(TLE_individualSat_List);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
             }
+        }
+
+        #endregion
+
+        #region Main information tab
+
+        /// <summary>
+        /// This method fill datagridview with TLE historic data
+        /// </summary>
+        /// <param name="input_TLE_list">Historic TLE data list</param>
+        private void FillMainInformationTabDataGridView(List<TLE_Sat> input_TLE_list)
+        {
+            var list = new BindingList<TLE_Sat>(input_TLE_list);
+            MainTLEHistoricInfoDataGridView.DataSource = list;
+        }
+
+        /// <summary>
+        /// This method fills information text boxes in main information tab page
+        /// </summary>
+        /// <param name="input_TLE_list">Historic TLE data list</param>
+        private void FillMainInformationTabTextBoxes(List<TLE_Sat> input_TLE_list)
+        {
+            int data_count = input_TLE_list.Count;
+
+            // Fill data count textbox
+            TLEDataCountTextBox.Text = Convert.ToString(data_count);
         }
 
         #endregion

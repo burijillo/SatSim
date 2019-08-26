@@ -38,8 +38,9 @@ namespace SatSim.Methods.TLE_Data
 				int _internal_counter = 0;
 				TLE_Sat tle_sat = new TLE_Sat();
 				byte[] buffer = new byte[250];
-				//List<TLE_Sat> final_list = new List<TLE_Sat>();
-				while(counter < (TLE_data.Length - 1))
+                DateTime epoch;
+                //List<TLE_Sat> final_list = new List<TLE_Sat>();
+                while (counter < (TLE_data.Length - 1))
 				{
 					if (TLE_data[counter] == 10 && TLE_data[counter + 1] == 49)
 					{
@@ -66,8 +67,9 @@ namespace SatSim.Methods.TLE_Data
 						tle_sat.Sat_LaunchPiece = TLE_Data_AuxMethods.GetLaunchPieceFromDesignator(tle_sat.Sat_IntDesignator);
 						tle_sat.Sat_EpochYear = TLE_Data_AuxMethods.GetYearFromEpoch(tle_sat.Sat_ElementSetEpoch);
 						tle_sat.Sat_EpochDay = TLE_Data_AuxMethods.GetDayFromEpoch(tle_sat.Sat_ElementSetEpoch);
+                        if (TLE_Data_AuxMethods.GetDateTimeFromEpoch(tle_sat.Sat_ElementSetEpoch, out epoch)) tle_sat.Sat_EpochDateTime = epoch;
 
-						Array.Clear(buffer, 0, buffer.Length);
+                        Array.Clear(buffer, 0, buffer.Length);
 						_internal_counter = 0;
 					}
 					else if (TLE_data[counter] == 10 && TLE_data[counter + 1] == 48)
@@ -157,8 +159,9 @@ namespace SatSim.Methods.TLE_Data
 				tabla.Columns.Add(new DataColumn(tle_sat_variables.Launch_Piece.ToString(), Type.GetType("System.String")));
 				tabla.Columns.Add(new DataColumn(tle_sat_variables.Epoch_Year.ToString(), Type.GetType("System.UInt32")));
 				tabla.Columns.Add(new DataColumn(tle_sat_variables.Epoch_Day.ToString(), Type.GetType("System.Double")));
+                tabla.Columns.Add(new DataColumn(tle_sat_variables.Epoch_DateTime.ToString(), Type.GetType("System.DateTime")));
 
-				_TLE_Sat_DataSet.Tables.Add(tabla);
+                _TLE_Sat_DataSet.Tables.Add(tabla);
 
 				return _TLE_Sat_DataSet;
 			}
@@ -203,8 +206,9 @@ namespace SatSim.Methods.TLE_Data
 					fila[20] = dataSet[i].Sat_LaunchPiece;
 					fila[21] = dataSet[i].Sat_EpochYear;
 					fila[22] = dataSet[i].Sat_EpochDay;
+                    fila[23] = dataSet[i].Sat_EpochDateTime;
 
-					_dataSet.Tables[0].Rows.Add(fila);
+                    _dataSet.Tables[0].Rows.Add(fila);
 				}
 
 				_TLE_Sat_DataSet = _dataSet;
@@ -290,8 +294,9 @@ namespace SatSim.Methods.TLE_Data
 				result.Sat_LaunchPiece = input_dataRow.ItemArray[20].ToString();
 				result.Sat_EpochYear = Convert.ToUInt32(input_dataRow.ItemArray[21]);
 				result.Sat_EpochDay = Convert.ToDouble(input_dataRow.ItemArray[22]);
+                result.Sat_EpochDateTime = Convert.ToDateTime(input_dataRow.ItemArray[23]);
 
-				result.Sat_SemiAxis = TLE_Data_AuxMethods.GetSemiAxisFromPeriod(result.Sat_MeanMotion);
+                result.Sat_SemiAxis = TLE_Data_AuxMethods.GetSemiAxisFromPeriod(result.Sat_MeanMotion);
 
 				_TLE_Sat_Selected = result;
 

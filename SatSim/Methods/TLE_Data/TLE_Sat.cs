@@ -32,6 +32,7 @@ namespace SatSim.Methods.TLE_Data
 		Launch_Piece = 20,
 		Epoch_Year = 21,
 		Epoch_Day = 22,
+		Epoch_DateTime = 23,
 	}
 
 	public enum tle_sat_serie_variables : uint
@@ -68,6 +69,7 @@ namespace SatSim.Methods.TLE_Data
 		public string Sat_LaunchPiece { get; set; }
 		public uint Sat_EpochYear { get; set; }
 		public double Sat_EpochDay { get; set; }
+		public DateTime Sat_EpochDateTime { get; set; }
 
 		// Post-processed items
 		public double Sat_SemiAxis { get; set; }

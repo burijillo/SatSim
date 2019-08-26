@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -136,6 +137,67 @@ namespace SatSim.Methods.TLE_Data
 			{
 				Debug.WriteLine(ex.ToString());
 				return 0.0;
+			}
+		}
+
+		public static int GetMonthAndDayFromEpoch(string epoch, out int day)
+		{
+			int result = 0;
+			DateTimeFormatInfo dtfi = DateTimeFormatInfo.CurrentInfo;
+
+			day = Convert.ToInt32(epoch.Substring(2, 3));
+			int year = Convert.ToInt32(GetYearFromEpoch(epoch));
+
+			for (int i = 0; i < dtfi.MonthNames.Length - 1; i++)
+			{
+				if (String.IsNullOrEmpty(dtfi.MonthNames[i]))
+					continue;
+
+				// Check month
+				int daysOfMonth = DateTime.DaysInMonth(year, i + 1);
+				if ((day - daysOfMonth) <= 0) return i + 1;
+				else day = day - daysOfMonth;
+			}
+
+			return result;
+		}
+
+		public static void GetTimeOfDayFromEpoch(string epoch, out int hour, out int minute, out int second)
+		{
+			double fractionOfDay = Convert.ToDouble("0" + epoch.Substring(5, 9), System.Globalization.CultureInfo.InvariantCulture);
+
+			// Get hour
+			hour = Convert.ToInt32(Math.Floor(24 * fractionOfDay));
+			// Get minute
+			double fractionOfHour = ((24 * fractionOfDay) - Math.Floor(24 * fractionOfDay));
+			minute = Convert.ToInt32(Math.Floor(60 * fractionOfHour));
+			// Get second
+			double fractionOfMinute = ((60 * fractionOfHour) - Math.Floor(60 * fractionOfHour));
+			second = Convert.ToInt32(Math.Floor(60 * fractionOfMinute));
+		}
+
+		public static bool GetDateTimeFromEpoch(string epoch, out DateTime dateTime_output)
+		{
+			try
+			{
+				// Select year
+				int year = Convert.ToInt32(GetYearFromEpoch(epoch));
+				// Select month and day, checking if year is leap
+				int day;
+				int month = GetMonthAndDayFromEpoch(epoch, out day);
+				// Select time of day
+				int hour, minute, second;
+				GetTimeOfDayFromEpoch(epoch, out hour, out minute, out second);
+
+				dateTime_output = new DateTime(year, month, day, hour, minute, second);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.ToString());
+				dateTime_output = DateTime.Now;
+				return false;
 			}
 		}
 
