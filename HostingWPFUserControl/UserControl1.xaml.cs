@@ -14,6 +14,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Globalization;
+using System.Diagnostics;
+
+using System.Windows.Media.Media3D;
+using SolarSystem;
 
 namespace HostingWPFUserControl
 {
@@ -48,10 +52,17 @@ namespace HostingWPFUserControl
 	/// </summary>
 	public partial class UserControl1 : UserControl
     {
+		OrbitsCalculator _data = new OrbitsCalculator();
         public UserControl1()
         {
+			DataContext = _data;
             InitializeComponent();
         }
+
+		private void UserControl_Loaded(object sender, RoutedEventArgs e)
+		{
+			_data.StartTimer();
+		}
 
 		public void Test(double parsed)
 		{
@@ -62,6 +73,12 @@ namespace HostingWPFUserControl
 			//Storyboard.SetSpeedRatio(parsed);
 			//animation.Duration = new Duration(TimeSpan.FromSeconds(parsed));
 			//Storyboard.Resume();
+		}
+
+		private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine("SALIIIII");
+			_data.StopTimer();
 		}
 	}
 }

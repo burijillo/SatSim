@@ -70,18 +70,19 @@ namespace SatSim.Forms
 
                 List<byte[]> _raw_bytes_divided = TLE_IndividualSat_DataSet.TLE_Lines_Divider(input_raw);
                 List<TLE_Sat> TLE_individualSat_List = TLE_IndividualSat_DataSet.TLE_Lines_DataExtractor(_raw_bytes_divided);
+                List<TLE_Sat> TLE_individualSat_ListProcessed = TLE_IndividualSat_DataSet.TLE_HistoricData_Processed(TLE_individualSat_List);
 
-                int count = 1;
-                foreach (var item in TLE_individualSat_List)
-                {
-                    Debug.WriteLine("Counter " + count + ": " + item.Sat_Inclination);
-                    count++;
-                }
+                //int count = 1;
+                //foreach (var item in TLE_individualSat_List)
+                //{
+                //    Debug.WriteLine("Counter " + count + ": " + item.Sat_Inclination);
+                //    count++;
+                //}
 
                 Debug.WriteLine(string.Format("Sat name: {0}, sat id: {1}", SelectedSatComboBox.Text, TLE_selectedSat_ID));
 
-                FillMainInformationTabDataGridView(TLE_individualSat_List);
-                FillMainInformationTabTextBoxes(TLE_individualSat_List);
+                FillMainInformationTabDataGridView(TLE_individualSat_ListProcessed);
+                FillMainInformationTabTextBoxes(TLE_individualSat_ListProcessed);
             }
             catch (Exception ex)
             {

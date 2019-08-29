@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HostingWPFUserControl.Properties {
+namespace Surfaces.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
