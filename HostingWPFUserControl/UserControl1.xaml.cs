@@ -52,7 +52,7 @@ namespace HostingWPFUserControl
 	/// </summary>
 	public partial class UserControl1 : UserControl
     {
-		OrbitsCalculator _data = new OrbitsCalculator();
+		public OrbitsCalculator _data = new OrbitsCalculator();
         public UserControl1()
         {
 			DataContext = _data;

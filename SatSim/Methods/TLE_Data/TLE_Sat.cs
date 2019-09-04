@@ -82,8 +82,10 @@ namespace SatSim.Methods.TLE_Data
 	}
 
 	public class Sat_Constants
-	{
-		public static double G_constant = 6.67259E-11;
+    {
+        public static double VISUALIZATION3D_SCALE = 0.1;
+
+        public static double G_constant = 6.67259E-11;
 		public static double EARTH_MASS_constant = 5.972E24;
 		public static double EARTH_RADIOUS_constant = 6371;
 	}

@@ -60,6 +60,7 @@
     <Compile Include="3DTools\Viewport3DDecorator.cs" />
     <Compile Include="Arc.cs" />
     <Compile Include="Circle.cs" />
+    <Compile Include="Line.cs" />
     <Compile Include="PropertyHolder.cs" />
     <Compile Include="Surface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

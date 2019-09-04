@@ -15,13 +15,15 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.Windows.Media.Media3D;
+using System.Windows.Shapes;
 using System.Diagnostics;
 
 using HostingWPFUserControl;
 
 namespace SolarSystem
 {
-    class OrbitsCalculator : INotifyPropertyChanged
+    public class OrbitsCalculator : INotifyPropertyChanged
     {
         private DateTime _startTime;
         private double _startDays;
@@ -40,7 +42,7 @@ namespace SolarSystem
             set { _daysPerSecond = value; Update("DaysPerSecond"); }
         }
 
-        public double SatelliteOrbitRadius { get { return 40; } set { } }
+        public double SatelliteOrbitRadius { get { return 890; } set { } }
 		public double SatelliteCoveredAngle { get; set; }
         public double Days { get; set; }
         public double EarthRotationAngle { get; set; }
@@ -49,7 +51,10 @@ namespace SolarSystem
         public double SatelliteOrbitPositionX { get; set; }
         public double SatelliteOrbitPositionY { get; set; }
         public double SatelliteOrbitPositionZ { get; set; }
+		public Point3D SatellitePointPosition { get; set; }
         public bool Paused { get; set; }
+
+		public double _EARTH_RADIUS { get; set; }
 
         public OrbitsCalculator()
         {
@@ -59,8 +64,14 @@ namespace SolarSystem
             _satelliteInclinationAngle = SatelliteInclinationAngle;
         }
 
+		public void UpdateVariables()
+		{
+			Update("_EARTH_RADIUS");
+		}
+
         public void StartTimer()
         {
+			UpdateVariables();
             _startTime = DateTime.Now;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromMilliseconds(10);
@@ -115,13 +126,46 @@ namespace SolarSystem
 
 			double angleInclination = 2 * Math.PI / 360 * SatelliteInclinationAngle;
 			SatelliteCoveredAngle = angle;
-			SatelliteOrbitPositionX = SatelliteOrbitRadius * Math.Cos(angle);
-			SatelliteOrbitPositionY = SatelliteOrbitRadius * Math.Sin(angle);
-			SatelliteOrbitPositionZ = SatelliteOrbitRadius * Math.Sin(angleInclination) * Math.Sin(angle);
+			//SatelliteOrbitPositionX = SatelliteOrbitRadius * Math.Cos(angle);
+			//SatelliteOrbitPositionY = SatelliteOrbitRadius * Math.Sin(angle);
+			//SatelliteOrbitPositionZ = SatelliteOrbitRadius * Math.Sin(angleInclination) * Math.Sin(angle);
+
+			//--------------TEST--------------
+
+			double a = 950;
+			double ecc = 0.2;
+			double RAAN = 80 * Math.PI / 180;
+			double b = a * Math.Pow(1 - Math.Pow(ecc, 2), 0.5);
+			// Get focus distance to center (negative)
+			double c = -Math.Sqrt(Math.Pow(a, 2) - Math.Pow(b, 2));
+
+			double r_pos = (a * (1 - Math.Pow(ecc, 2)));
+
+			double r_true = r_pos / (1 + ecc * Math.Cos(angle));
+
+			double SatelliteOrbitPositionX0 = r_true * Math.Cos(angle);
+			double SatelliteOrbitPositionY0 = r_true * Math.Sin(angle);
+			double SatelliteOrbitPositionZ0 = 0;
+
+			// Change axis via axis X rotation -> from (x0,y0,z0) to (x1,y1,z1)
+			double SatelliteOrbitPositionX1 = SatelliteOrbitPositionX0;
+			double SatelliteOrbitPositionY1 = SatelliteOrbitPositionY0 * Math.Cos(angleInclination) - SatelliteOrbitPositionZ0 * Math.Sin(angleInclination);
+			double SatelliteOrbitPositionZ1 = SatelliteOrbitPositionY0 * Math.Sin(angleInclination) + SatelliteOrbitPositionZ0 * Math.Cos(angleInclination);
+
+			// Change axis via axis X rotation -> from (x1,y1,z1) to (x2,y2,z2)
+			SatelliteOrbitPositionX = SatelliteOrbitPositionX1 * Math.Cos(RAAN) - SatelliteOrbitPositionY1 * Math.Sin(RAAN);
+			SatelliteOrbitPositionY = SatelliteOrbitPositionX1 * Math.Sin(RAAN) + SatelliteOrbitPositionY1 * Math.Cos(RAAN);
+			SatelliteOrbitPositionZ = SatelliteOrbitPositionZ1;
+
+			SatellitePointPosition = new Point3D(SatelliteOrbitPositionX, SatelliteOrbitPositionY, SatelliteOrbitPositionZ);
+
+			//--------------TEST--------------
+
 			//Debug.WriteLine("HEEEY: days " + SatelliteOrbitRadius + "; x " + SatelliteOrbitPositionX + "; y " + SatelliteOrbitPositionY);
             Update("SatelliteOrbitPositionX");
             Update("SatelliteOrbitPositionY");
 			Update("SatelliteOrbitPositionZ");
+			Update("SatellitePointPosition");
             Update("Days");
 			Update("SatelliteCoveredAngle");
 			Update("SatelliteInclinationAngle");

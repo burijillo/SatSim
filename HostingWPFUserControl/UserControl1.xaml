@@ -22,7 +22,6 @@
                 Foreground="White" 
                 Content="{Binding Days}"/>
             <_3DTools:TrackballDecorator>
-                
                 <Viewport3D x:Name="viewport">
                     <Viewport3D.Resources>
                         <Label x:Key="labelito" Content="HOLAAA" FontSize="20" HorizontalAlignment="Right" Margin="3" Width="250" Height="250" VerticalAlignment="Top" />
@@ -52,7 +51,7 @@
                         </MaterialGroup>
                     </Viewport3D.Resources>
                     <Viewport3D.Camera>
-                        <PerspectiveCamera Position="-100 -100 100" LookDirection="1 1 -1"  UpDirection="0 0 1" FieldOfView="30"/>
+                        <PerspectiveCamera Position="-10000 -10000 10000" LookDirection="1 1 -1"  UpDirection="0 0 1" FieldOfView="30"/>
                     </Viewport3D.Camera>
                     <ModelVisual3D>
                         <ModelVisual3D.Content>
@@ -63,8 +62,8 @@
                             </Model3DGroup>
                         </ModelVisual3D.Content>
                     </ModelVisual3D>
-                    
-                    <ikriv:Sphere Radius="8" x:Name="Earth">
+
+                    <ikriv:Sphere Radius="{Binding _EARTH_RADIUS}" x:Name="Earth">
                         <ikriv:Sphere.Transform>
                             <Transform3DGroup>
                                 <RotateTransform3D>
@@ -84,14 +83,14 @@
                                 <DiffuseMaterial Brush="Black" />
                                 <EmissiveMaterial>
                                     <EmissiveMaterial.Brush>
-                                        <ImageBrush ImageSource="C:\SatSim\HostingWPFUserControl\Images\earth.jpg" />
+                                    <ImageBrush ImageSource="C:\SatSim\HostingWPFUserControl\Images\earth.jpg" />
                                     </EmissiveMaterial.Brush>
                                 </EmissiveMaterial>
                             </MaterialGroup>
                         </ikriv:Sphere.Material>
                     </ikriv:Sphere>
 
-                    <ikriv:Sphere Radius="2" x:Name="Satellite">
+                    <ikriv:Sphere Radius="20" x:Name="Satellite">
                         <ikriv:Sphere.Transform>
                             <Transform3DGroup>
                                 <!-- Earth proper rotation -->
@@ -130,22 +129,30 @@
                             </MaterialGroup>
                         </ikriv:Sphere.Material>
                     </ikriv:Sphere>
-                    
+
                     <ikriv:Arc x:Name="OrbitArc"
-                               Radius="{Binding SatelliteOrbitRadius}"
-                               Visible="True"
-                               Angle="{Binding SatelliteCoveredAngle}"
-                               AngleInclination="{Binding SatelliteInclinationAngle}"
-                               Material="{StaticResource RedGoo}" 
-                               BackMaterial="{StaticResource RedGoo}" />
+                                    Visible="True"
+                                    SatPosition="{Binding SatellitePointPosition}"
+                                    AngleInclination="{Binding SatelliteInclinationAngle}"
+                                    Material="{StaticResource RedGoo}" 
+                                    BackMaterial="{StaticResource RedGoo}" />
 
                     <ikriv:Circle x:Name="OrbitPlane" 
-                                  Radius="{Binding SatelliteOrbitRadius}"
-                                  Visible="True"
-                                  Material="{StaticResource GreyGoo}" 
-                                  BackMaterial="{StaticResource GreyGoo}" />
+                                        Radius="{Binding SatelliteOrbitRadius}"
+                                        Visible="True"
+                                        Material="{StaticResource GreyGoo}" 
+                                        BackMaterial="{StaticResource GreyGoo}" />
 
-                </Viewport3D>
+                    <!--<ikriv:Line x:Name="Linetest" 
+                                        Radius="900"
+                                        AngleLatitude="0"
+                                        AngleLongitude="0"
+                                        Position="0, 0, 0"
+                                        Visible="True"
+                                        Material="{StaticResource RedGoo}" 
+                                        BackMaterial="{StaticResource RedGoo}" />-->
+
+            </Viewport3D>
             </_3DTools:TrackballDecorator>
         <!--<Rectangle Fill="Blue" Margin="634,391,118,23">
             <Rectangle.RenderTransform>

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 
+using SatSim.Methods.TLE_Data;
+using SolarSystem;
+
 namespace SatSim.Visualization_3D
 {
 	public partial class MainVisualization_form : Form
@@ -48,7 +51,10 @@ namespace SatSim.Visualization_3D
 
 			uc = new HostingWPFUserControl.UserControl1();
 
-			host.Child = uc;
+            // INITIALIZE VISUALIZATION PARAMETERS
+            uc._data._EARTH_RADIUS = Sat_Constants.EARTH_RADIOUS_constant * Sat_Constants.VISUALIZATION3D_SCALE;
+
+            host.Child = uc;
 
 			this.Controls.Add(host);
 		}
