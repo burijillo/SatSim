@@ -53,6 +53,10 @@ namespace SatSim.Visualization_3D
 
             // INITIALIZE VISUALIZATION PARAMETERS
             uc._data._EARTH_RADIUS = Sat_Constants.EARTH_RADIOUS_constant * Sat_Constants.VISUALIZATION3D_SCALE;
+            uc._data._INCLINATION = 10;
+            uc._data._RAAN = 30;
+            uc._data._SEMIAXIS = 950;
+            uc._data._ECCENTRICITY = 0.3;
 
             host.Child = uc;
 

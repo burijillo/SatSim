@@ -14,17 +14,17 @@
     <UserControl.Resources>
         <RotateTransform x:Key="rotate" Angle="0" />
     </UserControl.Resources>
-    <Grid Background="Black">
+    <Grid x:Name="mainGrid" Background="Black">
         <Label 
                 HorizontalAlignment="Right" 
                 TextBlock.TextAlignment="Right" 
                 FontSize="15" 
                 Foreground="White" 
-                Content="{Binding Days}"/>
+                Content="{Binding LabelInfo}" VerticalAlignment="Top"/>
             <_3DTools:TrackballDecorator>
-                <Viewport3D x:Name="viewport">
+                <Viewport3D x:Name="viewport"
+                            RenderOptions.BitmapScalingMode="HighQuality">
                     <Viewport3D.Resources>
-                        <Label x:Key="labelito" Content="HOLAAA" FontSize="20" HorizontalAlignment="Right" Margin="3" Width="250" Height="250" VerticalAlignment="Top" />
                         <MaterialGroup x:Key="GreyGoo">
                             <DiffuseMaterial>
                                 <DiffuseMaterial.Brush>
@@ -49,9 +49,21 @@
                                 </EmissiveMaterial.Brush>
                             </EmissiveMaterial>
                         </MaterialGroup>
-                    </Viewport3D.Resources>
+                        <MaterialGroup x:Key="YellowGoo">
+                            <DiffuseMaterial>
+                                <DiffuseMaterial.Brush>
+                                    <SolidColorBrush Color="Yellow" Opacity="0.8" />
+                                </DiffuseMaterial.Brush>
+                            </DiffuseMaterial>
+                            <EmissiveMaterial>
+                                <EmissiveMaterial.Brush>
+                                    <SolidColorBrush Color="Yellow" Opacity="0.8" />
+                                </EmissiveMaterial.Brush>
+                            </EmissiveMaterial>
+                        </MaterialGroup>
+                </Viewport3D.Resources>
                     <Viewport3D.Camera>
-                        <PerspectiveCamera Position="-10000 -10000 10000" LookDirection="1 1 -1"  UpDirection="0 0 1" FieldOfView="30"/>
+                        <PerspectiveCamera Position="10000 10000 10000" LookDirection="-1 -1 -1"  UpDirection="0 0 1" FieldOfView="30"/>
                     </Viewport3D.Camera>
                     <ModelVisual3D>
                         <ModelVisual3D.Content>
@@ -143,48 +155,44 @@
                                         Material="{StaticResource GreyGoo}" 
                                         BackMaterial="{StaticResource GreyGoo}" />
 
-                    <!--<ikriv:Line x:Name="Linetest" 
+                    <ikriv:Line x:Name="Line0" 
                                         Radius="900"
+                                        Thickness="2"
                                         AngleLatitude="0"
                                         AngleLongitude="0"
                                         Position="0, 0, 0"
                                         Visible="True"
-                                        Material="{StaticResource RedGoo}" 
-                                        BackMaterial="{StaticResource RedGoo}" />-->
+                                        Material="{StaticResource YellowGoo}" 
+                                        BackMaterial="{StaticResource YellowGoo}" />
+                    <ikriv:Line x:Name="Line1" 
+                                            Radius="900"
+                                            Thickness="2"
+                                            AngleLatitude="90"
+                                            AngleLongitude="0"
+                                            Position="0, 0, 0"
+                                            Visible="True"
+                                            Material="{StaticResource YellowGoo}" 
+                                            BackMaterial="{StaticResource YellowGoo}" />
+                    <ikriv:Line x:Name="Line2" 
+                                            Radius="900"
+                                            Thickness="2"
+                                            AngleLatitude="0"
+                                            AngleLongitude="90"
+                                            Position="0, 0, 0"
+                                            Visible="True"
+                                            Material="{StaticResource YellowGoo}" 
+                                            BackMaterial="{StaticResource YellowGoo}" />
+                    <ikriv:Line x:Name="Line3" 
+                                            Radius="900"
+                                            Thickness="2"
+                                            AngleLatitude="0"
+                                            AngleLongitude="{Binding _RAAN}"
+                                            Position="0, 0, 0"
+                                            Visible="True"
+                                            Material="{StaticResource YellowGoo}" 
+                                            BackMaterial="{StaticResource YellowGoo}" />
 
             </Viewport3D>
             </_3DTools:TrackballDecorator>
-        <!--<Rectangle Fill="Blue" Margin="634,391,118,23">
-            <Rectangle.RenderTransform>
-                <TranslateTransform X="{Binding Path=Angle,
-                                                Source={StaticResource rotate},
-                                                Converter={StaticResource sinConverter},
-                                                ConverterParameter=100}"
-                                    Y="{Binding Path=Angle,
-                                                Source={StaticResource rotate},
-                                                Converter={StaticResource sinConverter},
-                                                ConverterParameter=60}"/>
-            </Rectangle.RenderTransform>
-        </Rectangle>
-        <Ellipse Width="5" Height="5" Fill="White" Stroke="Black" StrokeThickness="1" />-->
     </Grid>
-    <!--<UserControl.Style>
-        <Style>
-            <Style.Triggers>
-                <EventTrigger RoutedEvent="UserControl.Loaded">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard Name="sstoryboard">
-                                <DoubleAnimation Name="animation"
-                                         Storyboard.Target="{StaticResource rotate}"
-                                         Storyboard.TargetProperty="Angle"
-                                         From="0" To="360" Duration="0:0:5"
-                                         RepeatBehavior="Forever" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Style>-->
 </UserControl>
