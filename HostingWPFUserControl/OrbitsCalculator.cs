@@ -26,12 +26,10 @@ namespace SolarSystem
     public class OrbitsCalculator : INotifyPropertyChanged
     {
         private DateTime _startTime;
-        private double _startDays;
         private DispatcherTimer _timer;
 
-        const double EarthYear = 30;
-        const double SatelliteRotationPeriod = 10000.0;
-        const double EarthRotationPeriod = 2.0;
+        const double EarthYear = 365;
+        const double EarthRotationPeriod = 1.0;
         const double TwoPi = Math.PI * 2;
 
         private double _daysPerSecond = 2;
@@ -54,6 +52,7 @@ namespace SolarSystem
         public double SatelliteOrbitPositionZ { get; set; }
 		public Point3D SatellitePointPosition { get; set; }
         public bool Paused { get; set; }
+		public bool InclinationEvol { get; set; }
 
 		// ************* EXTERNAL VARIABLES **************
 
@@ -62,6 +61,7 @@ namespace SolarSystem
 		public double _RAAN { get; set; }
 		public double _SEMIAXIS { get; set; }
 		public double _ECCENTRICITY { get; set; }
+		public double _PERIOD { get; set; }
 
 		// ***********************************************
 
@@ -69,7 +69,7 @@ namespace SolarSystem
         {
 			UpdateVariables();
 			SatelliteOrbitPositionX = SatelliteOrbitRadius;
-            DaysPerSecond = 2;
+            DaysPerSecond = 0.1;
         }
 
 		public void UpdateVariables()
@@ -77,6 +77,7 @@ namespace SolarSystem
 			Update("_EARTH_RADIUS");
 			Update("_RAAN");
 			Update("_INCLINATION");
+			Update("_PERIOD");
 			SatelliteInclinationAngle = _INCLINATION;
 			_satelliteInclinationAngle = SatelliteInclinationAngle;
 		}
@@ -103,11 +104,13 @@ namespace SolarSystem
         {
             if (doPause)
             {
-                StopTimer();
+				StopTimer();
+				Paused = true;
             }
             else
             {
-                StartTimer();
+				StartTimer();
+				Paused = false;
             }
         }
 
@@ -125,16 +128,23 @@ namespace SolarSystem
         {
 			SatPosition();
             EarthRotation();
-            SatelliteRotation();
         }
 
         private void SatPosition()
         {
-            double angle = 2 * Math.PI * Days / EarthYear;
+			double angle = 2 * Math.PI * Days / _PERIOD;
 
-			int augmentedInc = 3 * Convert.ToInt32(Math.Floor(Days / Convert.ToDouble(EarthYear)));
-			//Debug.WriteLine("AUG " + augmentedInc + "; DAYS " + Days);
-			SatelliteInclinationAngle = _satelliteInclinationAngle + augmentedInc;
+			int augmentedInc = 0;
+
+			if (InclinationEvol)
+			{
+				augmentedInc = 3 * Convert.ToInt32(Math.Floor(Days / Convert.ToDouble(_PERIOD)));
+				SatelliteInclinationAngle = _satelliteInclinationAngle + augmentedInc;
+			}
+			else
+			{
+				SatelliteInclinationAngle = _satelliteInclinationAngle + augmentedInc;
+			}
 
 			double angleInclination = 2 * Math.PI / 360 * SatelliteInclinationAngle;
 			SatelliteCoveredAngle = angle;
@@ -171,14 +181,14 @@ namespace SolarSystem
 
 			//--------------TEST--------------
 
-			LabelInfo = Days.ToString("F05") + "\n" + _RAAN + "\n" + SatelliteInclinationAngle;
+			LabelInfo = Days.ToString("F05") + "\n" + _RAAN + "\n" + SatelliteInclinationAngle + "\n" + (r_true * 10).ToString("F05") + "\n" + (angle / (2 * Math.PI)).ToString("F05");
 
 			//Debug.WriteLine("HEEEY: days " + SatelliteOrbitRadius + "; x " + SatelliteOrbitPositionX + "; y " + SatelliteOrbitPositionY);
             Update("SatelliteOrbitPositionX");
             Update("SatelliteOrbitPositionY");
 			Update("SatelliteOrbitPositionZ");
 			Update("SatellitePointPosition");
-            Update("Days");
+            //Update("Days");
 			Update("LabelInfo");
 			Update("SatelliteCoveredAngle");
 			Update("SatelliteInclinationAngle");
@@ -188,12 +198,6 @@ namespace SolarSystem
         {
             EarthRotationAngle = 360 * Days / EarthRotationPeriod;
             Update("EarthRotationAngle");
-        }
-
-        private void SatelliteRotation()
-        {
-			SatelliteRotationAngle = 360 * Days / SatelliteRotationPeriod;
-            Update("SatelliteRotationAngle");
         }
 
         private void Update(string propertyName)

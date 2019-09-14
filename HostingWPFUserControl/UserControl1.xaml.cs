@@ -64,8 +64,9 @@ namespace HostingWPFUserControl
 			_data.StartTimer();
 		}
 
-		public void Test(double parsed)
+		public void Test()
 		{
+			
 			//sstoryboard.Stop();
 			//animation.Duration = new Duration(TimeSpan.FromSeconds(parsed));
 			//sstoryboard.Begin();

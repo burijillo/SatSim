@@ -31,6 +31,7 @@ namespace SatSim
 		MainGraphVisualization_form mainGraphVisualization_form;
 
 		#region Initialize
+
 		public MainForm()
 		{
 			InitializeComponent();
@@ -99,7 +100,7 @@ namespace SatSim
 
         private void button1_Click(object sender, EventArgs e)
 		{
-			main3DVisualization_form = MainVisualization_form.GetInstance();
+			main3DVisualization_form = MainVisualization_form.GetInstance(tle_dataset._TLE_Sat_Selected);
 			if (!main3DVisualization_form.Visible)
 			{
 				main3DVisualization_form.Show();

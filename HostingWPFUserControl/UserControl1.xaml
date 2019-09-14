@@ -40,12 +40,12 @@
                         <MaterialGroup x:Key="RedGoo">
                             <DiffuseMaterial>
                                 <DiffuseMaterial.Brush>
-                                    <SolidColorBrush Color="Red" Opacity="0.3" />
+                                    <SolidColorBrush Color="Red" Opacity="0.9" />
                                 </DiffuseMaterial.Brush>
                             </DiffuseMaterial>
                             <EmissiveMaterial>
                                 <EmissiveMaterial.Brush>
-                                    <SolidColorBrush Color="Red" Opacity="0.3" />
+                                    <SolidColorBrush Color="Red" Opacity="0.9" />
                                 </EmissiveMaterial.Brush>
                             </EmissiveMaterial>
                         </MaterialGroup>
@@ -61,9 +61,21 @@
                                 </EmissiveMaterial.Brush>
                             </EmissiveMaterial>
                         </MaterialGroup>
+                        <MaterialGroup x:Key="GreenGoo">
+                            <DiffuseMaterial>
+                                <DiffuseMaterial.Brush>
+                                    <SolidColorBrush Color="Green" Opacity="0.8" />
+                                </DiffuseMaterial.Brush>
+                            </DiffuseMaterial>
+                            <EmissiveMaterial>
+                                <EmissiveMaterial.Brush>
+                                    <SolidColorBrush Color="Green" Opacity="0.8" />
+                                </EmissiveMaterial.Brush>
+                            </EmissiveMaterial>
+                        </MaterialGroup>
                 </Viewport3D.Resources>
                     <Viewport3D.Camera>
-                        <PerspectiveCamera Position="10000 10000 10000" LookDirection="-1 -1 -1"  UpDirection="0 0 1" FieldOfView="30"/>
+                        <PerspectiveCamera Position="5000 5000 5000" LookDirection="-1 -1 -1"  UpDirection="0 0 1" FieldOfView="30"/>
                     </Viewport3D.Camera>
                     <ModelVisual3D>
                         <ModelVisual3D.Content>
@@ -189,8 +201,8 @@
                                             AngleLongitude="{Binding _RAAN}"
                                             Position="0, 0, 0"
                                             Visible="True"
-                                            Material="{StaticResource YellowGoo}" 
-                                            BackMaterial="{StaticResource YellowGoo}" />
+                                            Material="{StaticResource GreenGoo}" 
+                                            BackMaterial="{StaticResource GreenGoo}" />
 
             </Viewport3D>
             </_3DTools:TrackballDecorator>
