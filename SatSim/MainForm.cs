@@ -34,9 +34,11 @@ namespace SatSim
 
 		public MainForm()
 		{
-			InitializeComponent();
+            InitializeComponent();
 
-			tle_scrap = new TLE_Scrap();
+            
+
+            tle_scrap = new TLE_Scrap();
 			tle_dataset = TLE_MultiSat_DataSet.GetInstance();
 
 			tle_database_form = TLE_dataBase_form.GetInstance(tle_scrap, tle_dataset);
@@ -49,11 +51,11 @@ namespace SatSim
 			tle_database_form._tle_sat_selected_event += _tle_sat_selected_triggered;
 		}
 
-		#endregion
+        #endregion
 
-		#region TLE database
+        #region TLE database
 
-		private void loadDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        private void loadDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			tle_database_form = TLE_dataBase_form.GetInstance(tle_scrap, tle_dataset);
 			if (!tle_database_form.Visible)

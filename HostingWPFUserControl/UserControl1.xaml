@@ -107,7 +107,7 @@
                                 <DiffuseMaterial Brush="Black" />
                                 <EmissiveMaterial>
                                     <EmissiveMaterial.Brush>
-                                    <ImageBrush ImageSource="C:\SatSim\HostingWPFUserControl\Images\earth.jpg" />
+                                    <ImageBrush ImageSource="D:\Repos\SatSim\HostingWPFUserControl\Images\earth.jpg" />
                                     </EmissiveMaterial.Brush>
                                 </EmissiveMaterial>
                             </MaterialGroup>
