@@ -37,7 +37,7 @@ namespace SolarSystem
         public double DaysPerSecond
         {
             get { return _daysPerSecond; }
-            set { _daysPerSecond = value; Update("DaysPerSecond"); }
+            set { _daysPerSecond = value; } //Update("DaysPerSecond"); }
         }
 
         public double SatelliteOrbitRadius { get { return 890; } set { } }
@@ -56,12 +56,12 @@ namespace SolarSystem
 
 		// ************* EXTERNAL VARIABLES **************
 
-		public double _EARTH_RADIUS { get; set; }
-		public double _INCLINATION { get; set; }
-		public double _RAAN { get; set; }
-		public double _SEMIAXIS { get; set; }
-		public double _ECCENTRICITY { get; set; }
-		public double _PERIOD { get; set; }
+		//public double _EARTH_RADIUS { get; set; }
+		//public double _INCLINATION { get; set; }
+		//public double _RAAN { get; set; }
+		//public double _SEMIAXIS { get; set; }
+		//public double _ECCENTRICITY { get; set; }
+		//public double _PERIOD { get; set; }
 
 		// ***********************************************
 
@@ -78,8 +78,10 @@ namespace SolarSystem
 			Update("_RAAN");
 			Update("_INCLINATION");
 			Update("_PERIOD");
-			SatelliteInclinationAngle = _INCLINATION;
-			_satelliteInclinationAngle = SatelliteInclinationAngle;
+            //LabelInfo = _EARTH_RADIUS.ToString();
+            //Update("LabelInfo");
+            //SatelliteInclinationAngle = _INCLINATION;
+            _satelliteInclinationAngle = SatelliteInclinationAngle;
 		}
 
         public void StartTimer()
@@ -95,7 +97,7 @@ namespace SolarSystem
 
         public void StopTimer()
         {
-            _timer.Stop();
+            //_timer.Stop();
             _timer.Tick -= OnTimerTick;
             _timer = null;
         }
@@ -117,7 +119,7 @@ namespace SolarSystem
         void OnTimerTick(object sender, EventArgs e)
         {
 			var now = DateTime.Now;
-			Update("Days");
+			//Update("Days");
 			OnTimeChanged();
             //Days += (now-_startTime).TotalMilliseconds * DaysPerSecond / 1000.0;
 			Days += 10 * DaysPerSecond / 1000.0;
@@ -126,11 +128,11 @@ namespace SolarSystem
 
         private void OnTimeChanged()
         {
-			SatPosition();
+			//SatPosition();
             EarthRotation();
         }
 
-        private void SatPosition()
+        public void SatPosition(double Days, double _PERIOD, double _RAAN, double _SEMIAXIS, double _ECCENTRICITY, double _INCLINATION, out Point3D SatellitePointPosition)
         {
 			double angle = 2 * Math.PI * Days / _PERIOD;
 
@@ -146,7 +148,7 @@ namespace SolarSystem
 				SatelliteInclinationAngle = _satelliteInclinationAngle + augmentedInc;
 			}
 
-			double angleInclination = 2 * Math.PI / 360 * SatelliteInclinationAngle;
+			double angleInclination = 2 * Math.PI / 360 * _INCLINATION;
 			SatelliteCoveredAngle = angle;
 			//SatelliteOrbitPositionX = SatelliteOrbitRadius * Math.Cos(angle);
 			//SatelliteOrbitPositionY = SatelliteOrbitRadius * Math.Sin(angle);
@@ -179,19 +181,20 @@ namespace SolarSystem
 
 			SatellitePointPosition = new Point3D(SatelliteOrbitPositionX, SatelliteOrbitPositionY, SatelliteOrbitPositionZ);
 
+
 			//--------------TEST--------------
 
-			LabelInfo = Days.ToString("F05") + "\n" + _RAAN + "\n" + SatelliteInclinationAngle + "\n" + (r_true * 10).ToString("F05") + "\n" + (angle / (2 * Math.PI)).ToString("F05");
+			//LabelInfo = Days.ToString("F05") + "\n" + _RAAN + "\n" + SatelliteInclinationAngle + "\n" + (r_true * 10).ToString("F05") + "\n" + (angle / (2 * Math.PI)).ToString("F05");
 
-			//Debug.WriteLine("HEEEY: days " + SatelliteOrbitRadius + "; x " + SatelliteOrbitPositionX + "; y " + SatelliteOrbitPositionY);
-            Update("SatelliteOrbitPositionX");
-            Update("SatelliteOrbitPositionY");
-			Update("SatelliteOrbitPositionZ");
-			Update("SatellitePointPosition");
-            //Update("Days");
-			Update("LabelInfo");
-			Update("SatelliteCoveredAngle");
-			Update("SatelliteInclinationAngle");
+			////Debug.WriteLine("HEEEY: days " + SatelliteOrbitRadius + "; x " + SatelliteOrbitPositionX + "; y " + SatelliteOrbitPositionY);
+   //         Update("SatelliteOrbitPositionX");
+   //         Update("SatelliteOrbitPositionY");
+			//Update("SatelliteOrbitPositionZ");
+			//Update("SatellitePointPosition");
+   //         //Update("Days");
+			//Update("LabelInfo");
+			//Update("SatelliteCoveredAngle");
+			//Update("SatelliteInclinationAngle");
         }
 
         private void EarthRotation()

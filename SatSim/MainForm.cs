@@ -102,7 +102,9 @@ namespace SatSim
 
         private void button1_Click(object sender, EventArgs e)
 		{
-			main3DVisualization_form = MainVisualization_form.GetInstance(tle_dataset._TLE_Sat_Selected);
+            List<TLE_Sat> TLESatList = new List<TLE_Sat>();
+            TLESatList.Add(tle_dataset._TLE_Sat_Selected);
+			main3DVisualization_form = MainVisualization_form.GetInstance(TLESatList);
 			if (!main3DVisualization_form.Visible)
 			{
 				main3DVisualization_form.Show();

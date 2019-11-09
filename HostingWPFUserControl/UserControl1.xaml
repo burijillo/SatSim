@@ -10,6 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
              >
     <UserControl.Resources>
         <RotateTransform x:Key="rotate" Angle="0" />
@@ -34,6 +35,18 @@
                             <EmissiveMaterial>
                                 <EmissiveMaterial.Brush>
                                     <SolidColorBrush Color="Gray" Opacity="0.3" />
+                                </EmissiveMaterial.Brush>
+                            </EmissiveMaterial>
+                        </MaterialGroup>
+                        <MaterialGroup x:Key="SatelliteCover">
+                            <DiffuseMaterial>
+                                <DiffuseMaterial.Brush>
+                                    <SolidColorBrush Color="Blue" Opacity="1" />
+                                </DiffuseMaterial.Brush>
+                            </DiffuseMaterial>
+                            <EmissiveMaterial>
+                                <EmissiveMaterial.Brush>
+                                    <SolidColorBrush Color="Blue" Opacity="1" />
                                 </EmissiveMaterial.Brush>
                             </EmissiveMaterial>
                         </MaterialGroup>
@@ -114,10 +127,10 @@
                         </ikriv:Sphere.Material>
                     </ikriv:Sphere>
 
-                    <ikriv:Sphere Radius="20" x:Name="Satellite">
+                    <!--<ikriv:Sphere Radius="20" x:Name="Satellite">
                         <ikriv:Sphere.Transform>
                             <Transform3DGroup>
-                                <!-- Earth proper rotation -->
+                                --><!-- Earth proper rotation --><!--
                                 <RotateTransform3D>
                                     <RotateTransform3D.Rotation>
                                         <AxisAngleRotation3D 
@@ -126,7 +139,7 @@
                                     </RotateTransform3D.Rotation>
                                 </RotateTransform3D>
 
-                                <!-- Earth axis tilt -->
+                                --><!-- Earth axis tilt -->
                                 <!--<RotateTransform3D>
                                     <RotateTransform3D.Rotation>
                                         <AxisAngleRotation3D 
@@ -135,7 +148,7 @@
                                     </RotateTransform3D.Rotation>
                                 </RotateTransform3D>-->
 
-                                <!-- Earth orbit position -->
+                                <!-- Earth orbit position --><!--
                                 <TranslateTransform3D 
     							    OffsetX="{Binding SatelliteOrbitPositionX}" 
     							    OffsetY="{Binding SatelliteOrbitPositionY}" 
@@ -152,20 +165,20 @@
                                 </DiffuseMaterial>
                             </MaterialGroup>
                         </ikriv:Sphere.Material>
-                    </ikriv:Sphere>
+                    </ikriv:Sphere>-->
 
-                    <ikriv:Arc x:Name="OrbitArc"
+                    <!--<ikriv:Arc x:Name="OrbitArc"
                                     Visible="True"
                                     SatPosition="{Binding SatellitePointPosition}"
                                     AngleInclination="{Binding SatelliteInclinationAngle}"
                                     Material="{StaticResource RedGoo}" 
-                                    BackMaterial="{StaticResource RedGoo}" />
+                                    BackMaterial="{StaticResource RedGoo}" />-->
 
-                    <ikriv:Circle x:Name="OrbitPlane" 
+                    <!--<ikriv:Circle x:Name="OrbitPlane" 
                                         Radius="{Binding SatelliteOrbitRadius}"
                                         Visible="True"
                                         Material="{StaticResource GreyGoo}" 
-                                        BackMaterial="{StaticResource GreyGoo}" />
+                                        BackMaterial="{StaticResource GreyGoo}" />-->
 
                     <ikriv:Line x:Name="Line0" 
                                         Radius="900"
@@ -198,7 +211,7 @@
                                             Radius="900"
                                             Thickness="2"
                                             AngleLatitude="0"
-                                            AngleLongitude="{Binding _RAAN}"
+                                            AngleLongitude="{Binding _RAAN_ind}"
                                             Position="0, 0, 0"
                                             Visible="True"
                                             Material="{StaticResource GreenGoo}" 
