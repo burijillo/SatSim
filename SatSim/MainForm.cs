@@ -17,6 +17,7 @@ using SatSim.WaitForm;
 using SatSim.Forms;
 using SatSim.Visualization_3D;
 using SatSim.Visualization_Graphs;
+using SatSim.MapForm;
 
 namespace SatSim
 {
@@ -29,6 +30,7 @@ namespace SatSim
         TLE_HistoricSelectedSatInfo_form tle_historic_form;
 		MainVisualization_form main3DVisualization_form;
 		MainGraphVisualization_form mainGraphVisualization_form;
+        MapsForm mainMap_form;
 
 		#region Initialize
 
@@ -157,5 +159,18 @@ namespace SatSim
 				mainGraphVisualization_form.BringToFront();
 			}
 		}
-	}
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            mainMap_form = MapsForm.GetInstance();
+            if (!mainMap_form.Visible)
+            {
+                mainMap_form.Show();
+            }
+            else
+            {
+                mainMap_form.BringToFront();
+            }
+        }
+    }
 }
