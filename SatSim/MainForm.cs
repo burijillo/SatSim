@@ -19,6 +19,10 @@ using SatSim.Visualization_3D;
 using SatSim.Visualization_Graphs;
 using SatSim.MapForm;
 
+using OxyPlot.WindowsForms;
+using OxyPlot;
+using OxyPlot.Axes;
+
 namespace SatSim
 {
 	public partial class MainForm : Form
@@ -38,8 +42,6 @@ namespace SatSim
 		{
             InitializeComponent();
 
-            
-
             tle_scrap = new TLE_Scrap();
 			tle_dataset = TLE_MultiSat_DataSet.GetInstance();
 
@@ -48,6 +50,8 @@ namespace SatSim
 
             // Only when a satellite is selected this form would be available
             historicTLEDataToolStripMenuItem.Enabled = false;
+
+            TLESatelliteDataGroupBox.Enabled = false;
 
 			tle_database_form._tle_loaded_event += _tle_loaded_triggered;
 			tle_database_form._tle_sat_selected_event += _tle_sat_selected_triggered;
@@ -82,7 +86,12 @@ namespace SatSim
 			SatSelectedEventToolStripLabel.BackColor = Color.LightGreen;
 
             historicTLEDataToolStripMenuItem.Enabled = true;
-		}
+
+            // Main TLE Satellite Data Groupbox
+            TLESatelliteDataGroupBox.Enabled = true;
+            Fill_MainWindow_TLESatInfo_GroupBox();
+            Paint_MainWindow_TLESatInfo_Orbit();
+        }
 
         #endregion
 
@@ -98,6 +107,135 @@ namespace SatSim
             {
                 tle_historic_form.BringToFront();
             }
+        }
+
+        #endregion
+
+        #region TLE Satellite Data Group Box
+
+        /// <summary>
+        /// This method is used to fill all text boxes with the selected satellite data
+        /// </summary>
+        private void Fill_MainWindow_TLESatInfo_GroupBox()
+        {
+            try
+            {
+                // Main data
+                SelectedSatNameTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_Name;
+                SelectedSatYearTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_LaunchYear.ToString();
+                SelectedSatNumberTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_LaunchNumber.ToString();
+                SelectedSatPieceTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_LaunchPiece;
+                SelectedSatIDTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_Number.ToString();
+                SelectedSatDesignatorTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_Classification;
+                SelectedSatClassificationTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_IntDesignator;
+                SelectedSatSetTypeTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_SetType;
+                SelectedSatSetNumberTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_SetNumber;
+
+                // Orbital data
+                SelectedSatInclinationTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_Inclination.ToString();
+                SelectedSatRAANTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_RightAscension.ToString();
+                SelectedSatMeanAnomalyTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_MeanAnomaly.ToString();
+                SelectedSatEccentricityTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_Eccentricity.ToString();
+                SelectedSatArgPerigeeTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_ArgumentPerigee.ToString();
+                SelectedSatMeanMotionTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_MeanMotion.ToString();
+
+                // SGP4 data
+                SelectedSatFirstDerTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_FirstMeanMotionDer.ToString();
+                SelectedSatSecDerTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_SecMeanMotionDer.ToString();
+                SelectedSatBDragTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_BSTARDrag.ToString();
+
+                // Reference data
+                SelectedSatEpochYearTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_EpochYear.ToString();
+                SelectedSatEpochDayTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_EpochDay.ToString();
+                SelectedSatEpochRevsTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_RevNumber.ToString();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// This method paints the selected satellite orbit plane
+        /// </summary>
+        private void Paint_MainWindow_TLESatInfo_Orbit()
+        {
+            // First erase last orbit in panel
+            SatelliteOrbitPanel.Controls.Clear();
+
+            PlotView _orbit_plot = new PlotView();
+            PlotModel orbitModel = new PlotModel();
+
+            _orbit_plot.Dock = DockStyle.Fill;
+            _orbit_plot.BackColor = Color.DimGray;
+            _orbit_plot.ForeColor = Color.White;
+
+            orbitModel.TextColor = OxyColor.FromRgb(255, 255, 255);
+            orbitModel.PlotAreaBorderColor = OxyColors.Transparent;
+
+            _orbit_plot.Model = orbitModel;
+            orbitModel.PlotType = PlotType.Cartesian;
+
+            SatelliteOrbitPanel.Controls.Add(_orbit_plot);
+
+            GetOrbitPainted(orbitModel);
+            GetEarthPainted(orbitModel);
+        }
+
+        /// <summary>
+        /// This method obtains up to 360 points of the selected satellite trajectory
+        /// </summary>
+        /// <param name="orbitModel"></param>
+        private void GetOrbitPainted(PlotModel orbitModel)
+        {
+            double a = tle_dataset._TLE_Sat_Selected.Sat_SemiAxis;
+            double ecc = tle_dataset._TLE_Sat_Selected.Sat_Eccentricity;
+            double b = a * Math.Pow(1 - Math.Pow(ecc, 2), 0.5);
+            // Get focus distance to center (negative)
+            double c = -Math.Sqrt(Math.Pow(a, 2) - Math.Pow(b, 2));
+
+            double r_pos = (a * (1 - Math.Pow(ecc, 2)));
+
+            OxyPlot.Series.ScatterSeries orbit = new OxyPlot.Series.ScatterSeries();
+            orbit.MarkerSize = 1;
+            orbit.MarkerStroke = OxyColor.FromRgb(255, 0, 0);
+            orbit.MarkerStrokeThickness = 1;
+
+            orbitModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1, AxislineColor = OxyColor.FromRgb(255, 255, 255), AxislineStyle = LineStyle.Solid, MajorGridlineColor = OxyColors.White });
+            orbitModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1, AxislineColor = OxyColor.FromRgb(255, 255, 255), AxislineStyle = LineStyle.Solid });
+
+            for (int j = 0; j < 360; j++)
+            {
+                double rad = (double)j * (double)2 * Math.PI / (double)360;
+                double r_true = r_pos / (1 + ecc * Math.Cos(j));
+
+                double x = r_true * Math.Cos(j);
+                double y = r_true * Math.Sin(j);
+                OxyPlot.Series.ScatterPoint point = new OxyPlot.Series.ScatterPoint(x, y);
+                orbit.Points.Add(point);
+            }
+
+            orbitModel.Series.Add(orbit);
+        }
+
+        /// <summary>
+        /// This method paints the circle of the earth
+        /// </summary>
+        /// <param name="orbitModel"></param>
+        private void GetEarthPainted(PlotModel orbitModel)
+        {
+            OxyPlot.Annotations.EllipseAnnotation earth = new OxyPlot.Annotations.EllipseAnnotation();
+
+            earth.Fill = OxyColor.FromRgb(0, 0, 0);
+            earth.Width = 2 * Sat_Constants.EARTH_RADIOUS_constant * 1000;
+            earth.Height = 2 * Sat_Constants.EARTH_RADIOUS_constant * 1000;
+
+            orbitModel.Annotations.Add(earth);
+
+            OxyPlot.Series.ScatterSeries serie = new OxyPlot.Series.ScatterSeries();
+            serie.Points.Add(new OxyPlot.Series.ScatterPoint(0, 0));
+
+            orbitModel.Series.Add(serie);
         }
 
         #endregion
@@ -119,32 +257,7 @@ namespace SatSim
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			chart1.Series.Clear();
 
-			double a = tle_dataset._TLE_Sat_Selected.Sat_SemiAxis;
-			double ecc = tle_dataset._TLE_Sat_Selected.Sat_Eccentricity;
-			double b = a * Math.Pow(1 - Math.Pow(ecc, 2), 0.5);
-
-			Series serie = new Series();
-			serie.ChartType = SeriesChartType.Spline;
-
-			chart1.ChartAreas[0].Position.Height = 100;
-			chart1.ChartAreas[0].Position.Width = 100;
-
-			chart1.ChartAreas[0].AxisY.Maximum = 90000000;
-			chart1.ChartAreas[0].AxisX.Maximum = 90000000;
-			chart1.ChartAreas[0].AxisY.Minimum = -90000000;
-			chart1.ChartAreas[0].AxisX.Minimum = -90000000;
-
-			for (int j = 0; j < 360; j++)
-			{
-				double rad = (double)j  * (double)2 * Math.PI / (double)360;
-				double x = a * Math.Cos(j);
-				double y = b * Math.Sin(j);
-				serie.Points.AddXY(x, y);
-			}
-
-			chart1.Series.Add(serie);
 		}
 
 		private void button3_Click(object sender, EventArgs e)

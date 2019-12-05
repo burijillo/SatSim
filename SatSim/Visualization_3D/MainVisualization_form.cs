@@ -18,7 +18,7 @@ namespace SatSim.Visualization_3D
 	{
 		#region Singleton
 		private static MainVisualization_form _instance;
-		List<TLE_Sat> _tle_sat_list;
+		readonly List<TLE_Sat> _tle_sat_list;
 
 		HostingWPFUserControl.UserControl1 uc;
 		public static MainVisualization_form GetInstance(List<TLE_Sat> tle_Sat_list)
