@@ -182,10 +182,10 @@ namespace SatSim.Forms
 		{
 			OpenFileDialog openDialog = new OpenFileDialog();
 
-			openDialog.InitialDirectory = "c:\\";
+			openDialog.InitialDirectory = @"C:\Users\adeus\Desktop";
 			openDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
 			openDialog.FilterIndex = 1;
-			openDialog.RestoreDirectory = true;
+			//openDialog.RestoreDirectory = true;
 
 			if (openDialog.ShowDialog() == DialogResult.OK)
 			{

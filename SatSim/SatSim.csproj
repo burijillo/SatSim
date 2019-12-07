@@ -135,6 +135,7 @@
     <Compile Include="Forms\TLE_SelectedSatInfo_form.Designer.cs">
       <DependentUpon>TLE_SelectedSatInfo_form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Methods\Tracks\TrackMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visualization_3D\MainVisualization_form.cs">

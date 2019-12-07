@@ -190,9 +190,6 @@ namespace SatSim
         {
             double a = tle_dataset._TLE_Sat_Selected.Sat_SemiAxis;
             double ecc = tle_dataset._TLE_Sat_Selected.Sat_Eccentricity;
-            double b = a * Math.Pow(1 - Math.Pow(ecc, 2), 0.5);
-            // Get focus distance to center (negative)
-            double c = -Math.Sqrt(Math.Pow(a, 2) - Math.Pow(b, 2));
 
             double r_pos = (a * (1 - Math.Pow(ecc, 2)));
 
@@ -275,7 +272,9 @@ namespace SatSim
 
         private void button4_Click(object sender, EventArgs e)
         {
-            mainMap_form = MapsForm.GetInstance();
+            List<TLE_Sat> TLESatList = new List<TLE_Sat>();
+            TLESatList.Add(tle_dataset._TLE_Sat_Selected);
+            mainMap_form = MapsForm.GetInstance(TLESatList);
             if (!mainMap_form.Visible)
             {
                 mainMap_form.Show();
