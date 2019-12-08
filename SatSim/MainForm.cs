@@ -52,9 +52,6 @@ namespace SatSim
             historicTLEDataToolStripMenuItem.Enabled = false;
 
             TLESatelliteDataGroupBox.Enabled = false;
-
-			tle_database_form._tle_loaded_event += _tle_loaded_triggered;
-			tle_database_form._tle_sat_selected_event += _tle_sat_selected_triggered;
 		}
 
         #endregion
@@ -63,7 +60,12 @@ namespace SatSim
 
         private void loadDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			tle_database_form = TLE_dataBase_form.GetInstance(tle_scrap, tle_dataset);
+            tle_database_form = TLE_dataBase_form.GetInstance(tle_scrap, tle_dataset);
+
+            // Events are loaded here because if the window is closed, the instance is null, so the new all to get an instance would get a NEW instance without this definition of events made
+            tle_database_form._tle_loaded_event += _tle_loaded_triggered;
+            tle_database_form._tle_sat_selected_event += _tle_sat_selected_triggered;
+
 			if (!tle_database_form.Visible)
 			{
 				tle_database_form.Show();

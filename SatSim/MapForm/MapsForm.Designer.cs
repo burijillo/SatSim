@@ -56,7 +56,7 @@
             this.gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.gMapControl1.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.gMapControl1.ShowTileGridLines = false;
-            this.gMapControl1.Size = new System.Drawing.Size(1198, 619);
+            this.gMapControl1.Size = new System.Drawing.Size(1010, 664);
             this.gMapControl1.TabIndex = 0;
             this.gMapControl1.Zoom = 3D;
             // 
@@ -72,14 +72,14 @@
             this.MainTableLayoutPanel.RowCount = 1;
             this.MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.MainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.MainTableLayoutPanel.Size = new System.Drawing.Size(1345, 625);
+            this.MainTableLayoutPanel.Size = new System.Drawing.Size(1136, 670);
             this.MainTableLayoutPanel.TabIndex = 1;
             // 
             // MapsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1345, 625);
+            this.ClientSize = new System.Drawing.Size(1136, 670);
             this.Controls.Add(this.MainTableLayoutPanel);
             this.Name = "MapsForm";
             this.Text = "MapsForm";
