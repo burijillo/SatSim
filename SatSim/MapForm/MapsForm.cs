@@ -85,5 +85,9 @@ namespace SatSim.MapForm
             //gMapControl1.Overlays.Add(polyOverlay);
         }
 
+        private void MapsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _instance = null;
+        }
     }
 }

@@ -83,6 +83,7 @@
             this.Controls.Add(this.MainTableLayoutPanel);
             this.Name = "MapsForm";
             this.Text = "MapsForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MapsForm_FormClosing);
             this.MainTableLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
