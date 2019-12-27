@@ -41,6 +41,7 @@ namespace SatSim.Methods.TLE_Data
 		RAAN = 1,
 		Radious = 2,
 		Velocity = 3,
+		Velocity_vs_Radious = 4,
 	}
 	public class TLE_Sat
 	{

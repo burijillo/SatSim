@@ -144,10 +144,10 @@
     <Compile Include="Visualization_3D\MainVisualization_form.Designer.cs">
       <DependentUpon>MainVisualization_form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Methods\Visualization_Graphs\MainGraphVisualization_form.cs">
+    <Compile Include="Forms\Visualization_Graphs\MainGraphVisualization_form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Methods\Visualization_Graphs\MainGraphVisualization_form.Designer.cs">
+    <Compile Include="Forms\Visualization_Graphs\MainGraphVisualization_form.Designer.cs">
       <DependentUpon>MainGraphVisualization_form.cs</DependentUpon>
     </Compile>
     <Compile Include="WaitForm\WaitingForm_simpleLine.cs">
@@ -187,7 +187,7 @@
     <EmbeddedResource Include="Visualization_3D\MainVisualization_form.resx">
       <DependentUpon>MainVisualization_form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Methods\Visualization_Graphs\MainGraphVisualization_form.resx">
+    <EmbeddedResource Include="Forms\Visualization_Graphs\MainGraphVisualization_form.resx">
       <DependentUpon>MainGraphVisualization_form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaitForm\WaitingForm_simpleLine.resx">

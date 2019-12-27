@@ -43,6 +43,11 @@ namespace SatSim.Methods.TimeSeries
 					case tle_sat_serie_variables.Velocity:
 						Get_SatVelocity_timeSeries(iterations);
 						break;
+
+					case tle_sat_serie_variables.Velocity_vs_Radious:
+						Get_SatVelocity_timeSeries(iterations);
+						Get_SatRadious_timeSeries(iterations);
+						break;
 				}
 			}
 			catch (Exception ex)

@@ -34,20 +34,30 @@
             this.DataLimitTextBox = new System.Windows.Forms.TextBox();
             this.SearchHistoricTLEButton = new System.Windows.Forms.Button();
             this.SelectedSatComboBox = new System.Windows.Forms.ComboBox();
-            this.TLEHistoricDataSetInformationTab = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.TLEHistoricDataSetInformationTab = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.MainTLEHistoricInfoDataGridView = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.TLEDataCountTextBox = new System.Windows.Forms.TextBox();
+            this.TLEHistoricDataSetPlotTabPage = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.SeriesPlotComboBox = new System.Windows.Forms.ComboBox();
+            this.PlotDataButton = new System.Windows.Forms.Button();
+            this.HistoricDataPlotView = new OxyPlot.WindowsForms.PlotView();
             this.MainTableLayoutPanel.SuspendLayout();
             this.DataLimitSelectorTableLayoutPanel.SuspendLayout();
-            this.TLEHistoricDataSetInformationTab.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.TLEHistoricDataSetInformationTab.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainTLEHistoricInfoDataGridView)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
+            this.TLEHistoricDataSetPlotTabPage.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // MainTableLayoutPanel
@@ -126,6 +136,17 @@
             this.SelectedSatComboBox.Size = new System.Drawing.Size(394, 21);
             this.SelectedSatComboBox.TabIndex = 3;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.TLEHistoricDataSetInformationTab);
+            this.tabControl1.Controls.Add(this.TLEHistoricDataSetPlotTabPage);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(3, 53);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(794, 394);
+            this.tabControl1.TabIndex = 1;
+            // 
             // TLEHistoricDataSetInformationTab
             // 
             this.TLEHistoricDataSetInformationTab.Controls.Add(this.tableLayoutPanel1);
@@ -136,16 +157,6 @@
             this.TLEHistoricDataSetInformationTab.TabIndex = 0;
             this.TLEHistoricDataSetInformationTab.Text = "TLE information";
             this.TLEHistoricDataSetInformationTab.UseVisualStyleBackColor = true;
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.TLEHistoricDataSetInformationTab);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 53);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(794, 394);
-            this.tabControl1.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
@@ -185,7 +196,8 @@
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(780, 150);
@@ -210,6 +222,96 @@
             this.TLEDataCountTextBox.ReadOnly = true;
             this.TLEDataCountTextBox.Size = new System.Drawing.Size(150, 20);
             this.TLEDataCountTextBox.TabIndex = 1;
+            this.TLEDataCountTextBox.TextChanged += new System.EventHandler(this.TLEDataCountTextBox_TextChanged);
+            // 
+            // TLEHistoricDataSetPlotTabPage
+            // 
+            this.TLEHistoricDataSetPlotTabPage.Controls.Add(this.tableLayoutPanel3);
+            this.TLEHistoricDataSetPlotTabPage.Location = new System.Drawing.Point(4, 22);
+            this.TLEHistoricDataSetPlotTabPage.Name = "TLEHistoricDataSetPlotTabPage";
+            this.TLEHistoricDataSetPlotTabPage.Size = new System.Drawing.Size(786, 368);
+            this.TLEHistoricDataSetPlotTabPage.TabIndex = 1;
+            this.TLEHistoricDataSetPlotTabPage.Text = "Plot Data";
+            this.TLEHistoricDataSetPlotTabPage.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 1;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.HistoricDataPlotView, 0, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(786, 368);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 4;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel4.Controls.Add(this.SeriesPlotComboBox, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.PlotDataButton, 3, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(786, 25);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(151, 25);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Select Data";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SeriesPlotComboBox
+            // 
+            this.SeriesPlotComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SeriesPlotComboBox.FormattingEnabled = true;
+            this.SeriesPlotComboBox.Location = new System.Drawing.Point(160, 3);
+            this.SeriesPlotComboBox.Name = "SeriesPlotComboBox";
+            this.SeriesPlotComboBox.Size = new System.Drawing.Size(229, 21);
+            this.SeriesPlotComboBox.TabIndex = 3;
+            // 
+            // PlotDataButton
+            // 
+            this.PlotDataButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PlotDataButton.Location = new System.Drawing.Point(552, 3);
+            this.PlotDataButton.Name = "PlotDataButton";
+            this.PlotDataButton.Size = new System.Drawing.Size(231, 19);
+            this.PlotDataButton.TabIndex = 5;
+            this.PlotDataButton.Text = "Plot Data";
+            this.PlotDataButton.UseVisualStyleBackColor = true;
+            this.PlotDataButton.Click += new System.EventHandler(this.PlotDataButton_Click);
+            // 
+            // HistoricDataPlotView
+            // 
+            this.HistoricDataPlotView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.HistoricDataPlotView.Location = new System.Drawing.Point(3, 28);
+            this.HistoricDataPlotView.Name = "HistoricDataPlotView";
+            this.HistoricDataPlotView.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.HistoricDataPlotView.Size = new System.Drawing.Size(780, 337);
+            this.HistoricDataPlotView.TabIndex = 1;
+            this.HistoricDataPlotView.Text = "plotView1";
+            this.HistoricDataPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.HistoricDataPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.HistoricDataPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
             // 
             // TLE_HistoricSelectedSatInfo_form
             // 
@@ -223,12 +325,16 @@
             this.MainTableLayoutPanel.ResumeLayout(false);
             this.DataLimitSelectorTableLayoutPanel.ResumeLayout(false);
             this.DataLimitSelectorTableLayoutPanel.PerformLayout();
-            this.TLEHistoricDataSetInformationTab.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.TLEHistoricDataSetInformationTab.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MainTLEHistoricInfoDataGridView)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.TLEHistoricDataSetPlotTabPage.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -248,5 +354,12 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TLEDataCountTextBox;
+        private System.Windows.Forms.TabPage TLEHistoricDataSetPlotTabPage;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox SeriesPlotComboBox;
+        private System.Windows.Forms.Button PlotDataButton;
+        private OxyPlot.WindowsForms.PlotView HistoricDataPlotView;
     }
 }
