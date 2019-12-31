@@ -140,6 +140,7 @@ namespace SatSim
                 SelectedSatEccentricityTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_Eccentricity.ToString();
                 SelectedSatArgPerigeeTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_ArgumentPerigee.ToString();
                 SelectedSatMeanMotionTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_MeanMotion.ToString();
+                SelectedSatSemiaxisTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_SemiAxis.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture);
 
                 // SGP4 data
                 SelectedSatFirstDerTextBox.Text = tle_dataset._TLE_Sat_Selected.Sat_FirstMeanMotionDer.ToString();

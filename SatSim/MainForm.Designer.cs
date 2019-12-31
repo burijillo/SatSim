@@ -105,6 +105,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.SelectedSatIDTextBox = new System.Windows.Forms.TextBox();
             this.SatelliteOrbitPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.SelectedSatSemiaxisTextBox = new System.Windows.Forms.TextBox();
             this.MainFormMenuStrip.SuspendLayout();
             this.MainFormToolStrip.SuspendLayout();
             this.MainTableTableLayoutPanel.SuspendLayout();
@@ -570,7 +572,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(412, 102);
+            this.groupBox1.Size = new System.Drawing.Size(412, 138);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Orbital parameters";
@@ -582,6 +584,7 @@
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel11.Controls.Add(this.label1, 0, 3);
             this.tableLayoutPanel11.Controls.Add(this.label18, 2, 2);
             this.tableLayoutPanel11.Controls.Add(this.label16, 0, 2);
             this.tableLayoutPanel11.Controls.Add(this.label13, 0, 0);
@@ -594,14 +597,16 @@
             this.tableLayoutPanel11.Controls.Add(this.label14, 0, 1);
             this.tableLayoutPanel11.Controls.Add(this.label15, 2, 0);
             this.tableLayoutPanel11.Controls.Add(this.label17, 2, 1);
+            this.tableLayoutPanel11.Controls.Add(this.SelectedSatSemiaxisTextBox, 1, 3);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel11.Name = "tableLayoutPanel11";
-            this.tableLayoutPanel11.RowCount = 3;
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel11.Size = new System.Drawing.Size(406, 84);
+            this.tableLayoutPanel11.RowCount = 4;
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel11.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel11.Size = new System.Drawing.Size(406, 112);
             this.tableLayoutPanel11.TabIndex = 0;
             // 
             // label18
@@ -1037,6 +1042,27 @@
             this.SatelliteOrbitPanel.Size = new System.Drawing.Size(350, 300);
             this.SatelliteOrbitPanel.TabIndex = 2;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 84);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 28);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Semiaxis";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SelectedSatSemiaxisTextBox
+            // 
+            this.SelectedSatSemiaxisTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SelectedSatSemiaxisTextBox.Location = new System.Drawing.Point(84, 87);
+            this.SelectedSatSemiaxisTextBox.Name = "SelectedSatSemiaxisTextBox";
+            this.SelectedSatSemiaxisTextBox.ReadOnly = true;
+            this.SelectedSatSemiaxisTextBox.Size = new System.Drawing.Size(115, 20);
+            this.SelectedSatSemiaxisTextBox.TabIndex = 22;
+            this.SelectedSatSemiaxisTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1162,6 +1188,8 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel SatelliteOrbitPanel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox SelectedSatSemiaxisTextBox;
     }
 }
 
