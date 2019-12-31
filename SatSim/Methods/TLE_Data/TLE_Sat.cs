@@ -74,6 +74,8 @@ namespace SatSim.Methods.TLE_Data
 
 		// Post-processed items
 		public double Sat_SemiAxis { get; set; }
+		public double Sat_Perigee { get; set; }
+		public double Sat_Apogee { get; set; }
 
 		// Time-series
 		public List<PointF> Sat_Inclination_series { get; set; }

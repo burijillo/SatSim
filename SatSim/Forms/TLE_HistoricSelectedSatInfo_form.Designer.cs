@@ -48,6 +48,8 @@
             this.SeriesPlotComboBox = new System.Windows.Forms.ComboBox();
             this.PlotDataButton = new System.Windows.Forms.Button();
             this.HistoricDataPlotView = new OxyPlot.WindowsForms.PlotView();
+            this.label4 = new System.Windows.Forms.Label();
+            this.TLERepeatedDataCountTextBox = new System.Windows.Forms.TextBox();
             this.MainTableLayoutPanel.SuspendLayout();
             this.DataLimitSelectorTableLayoutPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -190,6 +192,8 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel2.Controls.Add(this.TLERepeatedDataCountTextBox, 3, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label4, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.TLEDataCountTextBox, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -288,6 +292,7 @@
             this.SeriesPlotComboBox.Name = "SeriesPlotComboBox";
             this.SeriesPlotComboBox.Size = new System.Drawing.Size(229, 21);
             this.SeriesPlotComboBox.TabIndex = 3;
+            this.SeriesPlotComboBox.SelectedIndexChanged += new System.EventHandler(this.SeriesPlotComboBox_SelectedIndexChanged);
             // 
             // PlotDataButton
             // 
@@ -312,6 +317,26 @@
             this.HistoricDataPlotView.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
             this.HistoricDataPlotView.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
             this.HistoricDataPlotView.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(393, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(228, 25);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "TLE data repeated";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // TLERepeatedDataCountTextBox
+            // 
+            this.TLERepeatedDataCountTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TLERepeatedDataCountTextBox.Location = new System.Drawing.Point(627, 3);
+            this.TLERepeatedDataCountTextBox.Name = "TLERepeatedDataCountTextBox";
+            this.TLERepeatedDataCountTextBox.ReadOnly = true;
+            this.TLERepeatedDataCountTextBox.Size = new System.Drawing.Size(150, 20);
+            this.TLERepeatedDataCountTextBox.TabIndex = 3;
             // 
             // TLE_HistoricSelectedSatInfo_form
             // 
@@ -361,5 +386,7 @@
         private System.Windows.Forms.ComboBox SeriesPlotComboBox;
         private System.Windows.Forms.Button PlotDataButton;
         private OxyPlot.WindowsForms.PlotView HistoricDataPlotView;
+        private System.Windows.Forms.TextBox TLERepeatedDataCountTextBox;
+        private System.Windows.Forms.Label label4;
     }
 }

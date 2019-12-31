@@ -297,6 +297,8 @@ namespace SatSim.Methods.TLE_Data
                 result.Sat_EpochDateTime = Convert.ToDateTime(input_dataRow.ItemArray[23]);
 
                 result.Sat_SemiAxis = TLE_Data_AuxMethods.GetSemiAxisFromPeriod(result.Sat_MeanMotion);
+				result.Sat_Perigee = TLE_Data_AuxMethods.GetPerigee(result.Sat_SemiAxis,result.Sat_Eccentricity);
+				result.Sat_Apogee = TLE_Data_AuxMethods.GetApogee(result.Sat_SemiAxis, result.Sat_Eccentricity);
 
 				_TLE_Sat_Selected = result;
 

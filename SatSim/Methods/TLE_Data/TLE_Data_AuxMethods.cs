@@ -222,7 +222,40 @@ namespace SatSim.Methods.TLE_Data
 			}
 		}
 
-        public static string GetSatIDfromName(DataTable input_table, string input_name)
+		public static double GetPerigee(double semiaxis, double eccentricity)
+		{
+			try
+			{
+				double result = 0.0;
+
+				result = semiaxis * (1 - eccentricity);
+
+				return result;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.ToString());
+				return 0.0;
+			}
+		}
+		public static double GetApogee(double semiaxis, double eccentricity)
+		{
+			try
+			{
+				double result = 0.0;
+
+				result = semiaxis * (1 + eccentricity);
+
+				return result;
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex.ToString());
+				return 0.0;
+			}
+		}
+
+		public static string GetSatIDfromName(DataTable input_table, string input_name)
         {
             try
             {

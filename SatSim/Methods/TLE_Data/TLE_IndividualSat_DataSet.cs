@@ -95,6 +95,11 @@ namespace SatSim.Methods.TLE_Data
 					_TLE_sat.Sat_MeanMotion = Convert.ToDouble((System.Text.Encoding.Default.GetString(byte_arr)).Substring(123, 11), System.Globalization.CultureInfo.InvariantCulture);
 					_TLE_sat.Sat_RevNumber = Convert.ToUInt32((System.Text.Encoding.Default.GetString(byte_arr)).Substring(134, 5));
 
+					// Post-processed data
+					_TLE_sat.Sat_SemiAxis = TLE_Data_AuxMethods.GetSemiAxisFromPeriod(_TLE_sat.Sat_MeanMotion);
+					_TLE_sat.Sat_Perigee = TLE_Data_AuxMethods.GetPerigee(_TLE_sat.Sat_SemiAxis, _TLE_sat.Sat_Eccentricity);
+					_TLE_sat.Sat_Apogee = TLE_Data_AuxMethods.GetApogee(_TLE_sat.Sat_SemiAxis, _TLE_sat.Sat_Eccentricity);
+
 					TLE_individualSat_List.Add(_TLE_sat);
 				}
 
@@ -202,6 +207,9 @@ namespace SatSim.Methods.TLE_Data
 				double _Sat_MeanAnomaly = 0;
 				double _Sat_MeanMotion = 0;
 				uint _Sat_RevNumber = 0;
+				double _Sat_Semiaxis = 0;
+				double _Sat_Perigee = 0;
+				double _Sat_Apogee = 0;
 
 				for (int i = 0; i < TLE_buffer_list.Count; i++)
 				{
@@ -216,6 +224,9 @@ namespace SatSim.Methods.TLE_Data
 					_Sat_MeanAnomaly += TLE_buffer_list[i].Sat_MeanAnomaly;
 					_Sat_MeanMotion += TLE_buffer_list[i].Sat_MeanMotion;
 					_Sat_RevNumber += TLE_buffer_list[i].Sat_RevNumber;
+					_Sat_Semiaxis += TLE_buffer_list[i].Sat_SemiAxis;
+					_Sat_Perigee += TLE_buffer_list[i].Sat_Perigee;
+					_Sat_Apogee += TLE_buffer_list[i].Sat_Apogee;
 				}
 
 				_Sat_ElementSetEpoch_double = _Sat_ElementSetEpoch_double / TLE_buffer_list.Count;
@@ -229,6 +240,9 @@ namespace SatSim.Methods.TLE_Data
 				_Sat_MeanAnomaly = _Sat_MeanAnomaly / TLE_buffer_list.Count;
 				_Sat_MeanMotion = _Sat_MeanMotion / TLE_buffer_list.Count;
 				_Sat_RevNumber = _Sat_RevNumber / (uint)TLE_buffer_list.Count;
+				_Sat_Semiaxis = _Sat_Semiaxis / TLE_buffer_list.Count;
+				_Sat_Perigee = _Sat_Perigee / TLE_buffer_list.Count;
+				_Sat_Apogee = _Sat_Apogee / TLE_buffer_list.Count;
 
 				// Fill all TLE_Sat output. All data not promediated will be the first entry
 				result.Sat_Number = TLE_buffer_list[0].Sat_Number;
@@ -253,6 +267,9 @@ namespace SatSim.Methods.TLE_Data
 				result.Sat_EpochYear = TLE_Data_AuxMethods.GetYearFromEpoch(result.Sat_ElementSetEpoch);
 				result.Sat_EpochDay = TLE_Data_AuxMethods.GetDayFromEpoch(result.Sat_ElementSetEpoch);
 				result.Sat_EpochDateTime = _TLE_epochDatetime;
+				result.Sat_SemiAxis = _Sat_Semiaxis;
+				result.Sat_Perigee = _Sat_Apogee;
+				result.Sat_Apogee = _Sat_Apogee;
 
 				return result;
 			}
