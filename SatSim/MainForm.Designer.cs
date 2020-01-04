@@ -68,6 +68,7 @@
             this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -80,6 +81,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.SelectedSatSemiaxisTextBox = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
@@ -105,8 +107,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.SelectedSatIDTextBox = new System.Windows.Forms.TextBox();
             this.SatelliteOrbitPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.SelectedSatSemiaxisTextBox = new System.Windows.Forms.TextBox();
+            this.orbitModificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.orbitModificationToolStripButton = new System.Windows.Forms.ToolStripMenuItem();
             this.MainFormMenuStrip.SuspendLayout();
             this.MainFormToolStrip.SuspendLayout();
             this.MainTableTableLayoutPanel.SuspendLayout();
@@ -135,7 +137,8 @@
             this.MainFormMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MainFormMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configurationToolStripMenuItem,
-            this.historicTLEDataToolStripMenuItem});
+            this.historicTLEDataToolStripMenuItem,
+            this.orbitModificationToolStripMenuItem});
             this.MainFormMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MainFormMenuStrip.Name = "MainFormMenuStrip";
             this.MainFormMenuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
@@ -168,7 +171,7 @@
             // tLEDataSelectionToolStripMenuItem
             // 
             this.tLEDataSelectionToolStripMenuItem.Name = "tLEDataSelectionToolStripMenuItem";
-            this.tLEDataSelectionToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.tLEDataSelectionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.tLEDataSelectionToolStripMenuItem.Text = "TLE Data Selection";
             this.tLEDataSelectionToolStripMenuItem.Click += new System.EventHandler(this.tLEDataSelectionToolStripMenuItem_Click);
             // 
@@ -609,6 +612,17 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(406, 112);
             this.tableLayoutPanel11.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 84);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 28);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Semiaxis";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -734,6 +748,16 @@
             this.label17.TabIndex = 20;
             this.label17.Text = "Arg Perigee";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // SelectedSatSemiaxisTextBox
+            // 
+            this.SelectedSatSemiaxisTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SelectedSatSemiaxisTextBox.Location = new System.Drawing.Point(84, 87);
+            this.SelectedSatSemiaxisTextBox.Name = "SelectedSatSemiaxisTextBox";
+            this.SelectedSatSemiaxisTextBox.ReadOnly = true;
+            this.SelectedSatSemiaxisTextBox.Size = new System.Drawing.Size(115, 20);
+            this.SelectedSatSemiaxisTextBox.TabIndex = 22;
+            this.SelectedSatSemiaxisTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // panel2
             // 
@@ -1042,26 +1066,20 @@
             this.SatelliteOrbitPanel.Size = new System.Drawing.Size(350, 300);
             this.SatelliteOrbitPanel.TabIndex = 2;
             // 
-            // label1
+            // orbitModificationToolStripMenuItem
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 84);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 28);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "Semiaxis";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.orbitModificationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.orbitModificationToolStripButton});
+            this.orbitModificationToolStripMenuItem.Name = "orbitModificationToolStripMenuItem";
+            this.orbitModificationToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.orbitModificationToolStripMenuItem.Text = "Tools";
             // 
-            // SelectedSatSemiaxisTextBox
+            // orbitModificationToolStripButton
             // 
-            this.SelectedSatSemiaxisTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SelectedSatSemiaxisTextBox.Location = new System.Drawing.Point(84, 87);
-            this.SelectedSatSemiaxisTextBox.Name = "SelectedSatSemiaxisTextBox";
-            this.SelectedSatSemiaxisTextBox.ReadOnly = true;
-            this.SelectedSatSemiaxisTextBox.Size = new System.Drawing.Size(115, 20);
-            this.SelectedSatSemiaxisTextBox.TabIndex = 22;
-            this.SelectedSatSemiaxisTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.orbitModificationToolStripButton.Name = "orbitModificationToolStripButton";
+            this.orbitModificationToolStripButton.Size = new System.Drawing.Size(180, 22);
+            this.orbitModificationToolStripButton.Text = "Orbit Modification";
+            this.orbitModificationToolStripButton.Click += new System.EventHandler(this.orbitModificationToolStripMenuItem1_Click);
             // 
             // MainForm
             // 
@@ -1190,6 +1208,8 @@
         private System.Windows.Forms.Panel SatelliteOrbitPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox SelectedSatSemiaxisTextBox;
+        private System.Windows.Forms.ToolStripMenuItem orbitModificationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem orbitModificationToolStripButton;
     }
 }
 

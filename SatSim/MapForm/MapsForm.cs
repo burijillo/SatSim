@@ -44,12 +44,14 @@ namespace SatSim.MapForm
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerOnly;
 
             GMapOverlay markersOverlay = new GMapOverlay("markers");
+            GMapOverlay linesOverlay = new GMapOverlay("lines");
 
             //GMapOverlay polyOverlay = new GMapOverlay("polygons");
             //List<PointLatLng> points = new List<PointLatLng>();
 
             // Test for coordinates
             TrackMethods _trackMethods = new TrackMethods();
+            List<PointLatLng> pointList = new List<PointLatLng>();
             foreach (TLE_Sat sat in _tle_sat_list)
             {
                 List<double> longitude = new List<double>();
@@ -57,6 +59,7 @@ namespace SatSim.MapForm
                 double sat_period = 86164 / sat.Sat_MeanMotion;
                 _trackMethods.GetTrackCoordinates(sat.Sat_Inclination, sat.Sat_ArgumentPerigee, sat.Sat_SemiAxis, sat.Sat_Eccentricity, sat_period, sat.Sat_RightAscension, sat.Sat_MeanMotion, 1000, out longitude, out latitude);
                 //_trackMethods.GetTrackCoordinates(20, 270, 42164, 0.3, 86160, 60, 0, 360, out longitude, out latitude);
+
 
                 for (int i = 1; i < longitude.Count; i++)
                 {
@@ -66,6 +69,7 @@ namespace SatSim.MapForm
                     //points.Add(new PointLatLng(latitude[i], longitude[i]));
 
                     GMarkerCross marker = new GMarkerCross(new PointLatLng(latitude[i], longitude[i]));
+                    pointList.Add(new PointLatLng(latitude[i], longitude[i]));
                     marker.Pen = new Pen(Color.Yellow);
                     markersOverlay.Markers.Add(marker);
 
@@ -75,7 +79,19 @@ namespace SatSim.MapForm
                 }
             }
 
-            gMapControl1.Overlays.Add(markersOverlay);
+            // TODO: Checkear cuando por el cambio de longitud de >180 a <180 se genera una línea que no debería ser pintada
+            GMapRoute route = new GMapRoute(pointList, "trackLine");
+            route.Stroke = new Pen(Color.Yellow);
+            route.Stroke.Width = 2;
+            route.Stroke.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            route.Stroke.StartCap = System.Drawing.Drawing2D.LineCap.NoAnchor;
+            route.Stroke.EndCap = System.Drawing.Drawing2D.LineCap.NoAnchor;
+            route.Stroke.LineJoin = System.Drawing.Drawing2D.LineJoin.Round;
+            linesOverlay.Routes.Add(route);
+
+            gMapControl1.Overlays.Add(linesOverlay);
+
+            //gMapControl1.Overlays.Add(markersOverlay);
 
 
             //GMapPolygon polygon = new GMapPolygon(points, "mypolygon");

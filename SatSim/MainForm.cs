@@ -34,6 +34,7 @@ namespace SatSim
         TLE_HistoricSelectedSatInfo_form tle_historic_form;
 		MainVisualization_form main3DVisualization_form;
 		MainGraphVisualization_form mainGraphVisualization_form;
+        OrbitalModification_form orbitalModification_form;
         MapsForm mainMap_form;
 
 		#region Initialize
@@ -50,6 +51,7 @@ namespace SatSim
 
             // Only when a satellite is selected this form would be available
             historicTLEDataToolStripMenuItem.Enabled = false;
+            orbitModificationToolStripButton.Enabled = false;
 
             TLESatelliteDataGroupBox.Enabled = false;
 		}
@@ -88,6 +90,7 @@ namespace SatSim
 			SatSelectedEventToolStripLabel.BackColor = Color.LightGreen;
 
             historicTLEDataToolStripMenuItem.Enabled = true;
+            orbitModificationToolStripButton.Enabled = true;
 
             // Main TLE Satellite Data Groupbox
             TLESatelliteDataGroupBox.Enabled = true;
@@ -236,6 +239,24 @@ namespace SatSim
             serie.Points.Add(new OxyPlot.Series.ScatterPoint(0, 0));
 
             orbitModel.Series.Add(serie);
+        }
+
+        #endregion
+
+        #region Orbit Modification
+
+        private void orbitModificationToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            TLE_Sat tle_sat = tle_dataset._TLE_Sat_Selected;
+            orbitalModification_form = OrbitalModification_form.GetInstance(tle_sat);
+            if (!orbitalModification_form.Visible)
+            {
+                orbitalModification_form.Show();
+            }
+            else
+            {
+                orbitalModification_form.BringToFront();
+            }
         }
 
         #endregion

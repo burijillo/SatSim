@@ -93,6 +93,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\OrbitalModification_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OrbitalModification_form.Designer.cs">
+      <DependentUpon>OrbitalModification_form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\TLE_HistoricSelectedSatInfo_form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +117,7 @@
     <Compile Include="MapForm\MapsForm.Designer.cs">
       <DependentUpon>MapsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Methods\OrbitMod\OrbitModification_auxMethods.cs" />
     <Compile Include="Methods\TimeSeries\TimeSeries_calcs.cs" />
     <Compile Include="Forms\SelectedSatOrbit_form.cs">
       <SubType>Form</SubType>
@@ -156,6 +163,9 @@
     <Compile Include="WaitForm\WaitingForm_simpleLine.Designer.cs">
       <DependentUpon>WaitingForm_simpleLine.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\OrbitalModification_form.resx">
+      <DependentUpon>OrbitalModification_form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\TLE_HistoricSelectedSatInfo_form.resx">
       <DependentUpon>TLE_HistoricSelectedSatInfo_form.cs</DependentUpon>
     </EmbeddedResource>
