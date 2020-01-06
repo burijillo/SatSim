@@ -156,7 +156,7 @@ namespace SatSim.Forms
         {
             waitForm = new WaitingForm_simpleLine();
             waitForm.WaitFormLabel.Text = "Loading data from web...";
-            waitForm.WaitFormPictureBox.ImageLocation = @"D:\SatSim\SatSim\Resources\Loading_infinite.gif";
+            waitForm.WaitFormPictureBox.ImageLocation = @"D:\Repos\SatSim\SatSim\Resources\Loading_infinite.gif";
             waitForm.Show();
             getDatabase_bg.RunWorkerAsync();
 
