@@ -229,40 +229,52 @@ namespace SatSim.Forms
 
         private void PlotDataButton_Click(object sender, EventArgs e)
         {
-            // Redundant check
-            if(_isDataLoaded)
+            try
             {
-                ResetSeries();
-
-                int index = SeriesPlotComboBox.SelectedIndex;
-                float counter = MainTLEHistoricInfoDataGridView.Rows.Count - 1;
-                // Get latest date as initial year to iterate
-                DateTime _initialDateTime = Convert.ToDateTime(MainTLEHistoricInfoDataGridView.Rows[1].Cells[22].Value.ToString());
-                int _prevYear = _initialDateTime.Year;
-                List<KeyValuePair<int, int>> YearIndexList = new List<KeyValuePair<int, int>>();
-
-                foreach (DataGridViewRow item in MainTLEHistoricInfoDataGridView.Rows)
+                // Redundant check
+                if (_isDataLoaded)
                 {
-                    if (item.Cells[index].Value != null)
+                    ResetSeries();
+
+                    int index = SeriesPlotComboBox.SelectedIndex;
+                    float counter = MainTLEHistoricInfoDataGridView.Rows.Count - 1;
+                    // Get latest date as initial year to iterate
+                    DateTime _initialDateTime = Convert.ToDateTime(MainTLEHistoricInfoDataGridView.Rows[1].Cells[22].Value.ToString());
+                    int _prevYear = _initialDateTime.Year;
+                    List<KeyValuePair<int, int>> YearIndexList = new List<KeyValuePair<int, int>>();
+
+                    foreach (DataGridViewRow item in MainTLEHistoricInfoDataGridView.Rows)
                     {
-                        // Check if year changes
-                        int _actualYear = (Convert.ToDateTime(item.Cells[22].Value.ToString())).Year;
-                        if (_actualYear != _prevYear)
+                        if (item.Cells[index].Value != null)
                         {
-                            YearIndexList.Add(new KeyValuePair<int, int>((int)counter, _actualYear + 1));
+                            // Check if year changes
+                            int _actualYear = (Convert.ToDateTime(item.Cells[22].Value.ToString())).Year;
+                            if (_actualYear != _prevYear)
+                            {
+                                YearIndexList.Add(new KeyValuePair<int, int>((int)counter, _actualYear + 1));
+                            }
+                            _prevYear = _actualYear;
+
+                            //float value = float.TryParse(item.Cells[index].Value.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+                            float value;
+                            bool _isDataParsed = float.TryParse(item.Cells[index].Value.ToString().Replace(",", "."),NumberStyles.Any , CultureInfo.InvariantCulture, out value);
+
+                            if (_isDataParsed)
+                            {
+                                _plotPointsSerie.Add(new PointF(counter, value));
+                            }
+
+                            counter--;
                         }
-                        _prevYear = _actualYear;
-
-                        //Debug.WriteLine(item.Cells[22].Value.ToString());
-                        float value = float.Parse(item.Cells[index].Value.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
-                        _plotPointsSerie.Add(new PointF(counter, value));
-
-                        counter--;
                     }
-                }
 
-                PlotDataIntoPlotView();
-                PlotVerticalLinesYearsIntoPlotView(YearIndexList);
+                    PlotDataIntoPlotView();
+                    PlotVerticalLinesYearsIntoPlotView(YearIndexList);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
             }
         }
 
