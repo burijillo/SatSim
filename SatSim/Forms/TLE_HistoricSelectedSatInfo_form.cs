@@ -28,8 +28,10 @@ namespace SatSim.Forms
         public static TLE_Scrap _tle_scrap;
 
         private bool _isDataLoaded = false;
+        private bool _isSecondaryDataLoaded = false;
         private bool _isAxisChanging = true;
         List<PointF> _plotPointsSerie = new List<PointF>();
+        List<PointF> _plotPointsSerieSecondary = new List<PointF>();
 
         PlotModel MainPlotModel = new PlotModel();
 
@@ -74,6 +76,7 @@ namespace SatSim.Forms
             MainPlotModel.PlotType = PlotType.XY;
             MainPlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, MaximumPadding = 0.1, MinimumPadding = 0.1 });
             MainPlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, MaximumPadding = 0.1, MinimumPadding = 0.1, MajorGridlineStyle = LineStyle.Solid });
+            MainPlotModel.Axes.Add(new LinearAxis { Position = AxisPosition.Right, MaximumPadding = 0.1, MinimumPadding = 0.1, Key = "secondary" });
 
             OxyColor background_color = new OxyColor();
             background_color = Color.DimGray.ToOxyColor();
@@ -86,6 +89,22 @@ namespace SatSim.Forms
             getDatabase_bg.RunWorkerCompleted += GetDatabase_bg_RunWorkerCompleted;
 
             AcceptButton = SearchHistoricTLEButton;
+
+            ToolStripMenuItem AddInclination_button = new ToolStripMenuItem();
+            ToolStripMenuItem AddEccentricity_button = new ToolStripMenuItem();
+            ToolStripMenuItem AddSemiaxis_button = new ToolStripMenuItem();
+
+            AddInclination_button.Text = "Add inclination";
+            AddEccentricity_button.Text = "Add eccentricity";
+            AddSemiaxis_button.Text = "Add semiaxis";
+
+            AddInclination_button.Click += AddInclinationSecondaryAxis_Click;
+            AddEccentricity_button.Click += AddEccentricitySecondaryAxis_Click;
+            AddSemiaxis_button.Click += AddSemiaxisSecondaryAxis_Click;
+
+            SecondaryAxisContextMenuStrip.Items.Add(AddInclination_button);
+            SecondaryAxisContextMenuStrip.Items.Add(AddEccentricity_button);
+            SecondaryAxisContextMenuStrip.Items.Add(AddSemiaxis_button);
         }
 
         #endregion
@@ -299,13 +318,78 @@ namespace SatSim.Forms
             HistoricDataPlotView.InvalidatePlot(true);
         }
 
+        private void AddSecondarySeries(int index)
+        {
+            try
+            {
+                // Check if secondary data is loaded and clear it in that case
+                if(_isSecondaryDataLoaded)
+                {
+                    ResetSecondarySeries();
+                }
+                // Redundant check
+                if(_isDataLoaded)
+                {
+                    float counter = MainTLEHistoricInfoDataGridView.Rows.Count - 1;
+
+                    foreach (DataGridViewRow item in MainTLEHistoricInfoDataGridView.Rows)
+                    {
+                        if (item.Cells[index].Value != null)
+                        {
+                            //float value = float.TryParse(item.Cells[index].Value.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+                            float value;
+                            bool _isDataParsed = float.TryParse(item.Cells[index].Value.ToString().Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out value);
+
+                            if (_isDataParsed)
+                            {
+                                _plotPointsSerieSecondary.Add(new PointF(counter, value));
+                            }
+
+                            counter--;
+                        }
+                    }
+
+                    PlotSecondaryDataIntoView();
+
+                    _isSecondaryDataLoaded = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+        }
+
+        private void PlotSecondaryDataIntoView()
+        {
+            LineSeries serieSecondary = new LineSeries();
+
+            serieSecondary.MarkerSize = 2;
+            serieSecondary.LineStyle = LineStyle.Solid;
+            serieSecondary.MarkerFill = Color.LightBlue.ToOxyColor();
+            serieSecondary.Color = Color.GreenYellow.ToOxyColor();
+            serieSecondary.Smooth = true;
+            serieSecondary.MarkerType = MarkerType.Diamond;
+
+            foreach (var item in _plotPointsSerieSecondary)
+            {
+                DataPoint point = new DataPoint(item.X, item.Y);
+                serieSecondary.Points.Add(point);
+            }
+
+            serieSecondary.YAxisKey = "secondary";
+
+            MainPlotModel.Series.Add(serieSecondary);
+            HistoricDataPlotView.InvalidatePlot(true);
+        }
+
         private void PlotVerticalLinesYearsIntoPlotView(List<KeyValuePair<int, int>> YearIndexList)
         {
             // Get Y maximum and minimum
             double _Ymin = MainPlotModel.Axes[1].ActualMinimum;
             double _Ymax = MainPlotModel.Axes[1].ActualMaximum;
 
-            // These vañues are not always updated, so the values are hardcoded big just in case
+            // These values are not always updated, so the values are hardcoded big just in case
             if (_isAxisChanging)
             {
                 _Ymin = -10000000;
@@ -332,10 +416,43 @@ namespace SatSim.Forms
             _isAxisChanging = false;
         }
 
+        /// <summary>
+        /// Context menu pops up when right click is made
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HistoricDataPlotView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point click_point = HistoricDataPlotView.PointToScreen(e.Location);
+                SecondaryAxisContextMenuStrip.Show(click_point);
+            }
+        }
+
+        private void AddInclinationSecondaryAxis_Click(object sender, EventArgs e)
+        {
+            // Index #10 is inclination
+            AddSecondarySeries(10);
+        }
+
+        private void AddEccentricitySecondaryAxis_Click(object sender, EventArgs e)
+        {
+            // Index #12 is eccentricity
+            AddSecondarySeries(12);
+        }
+
+        private void AddSemiaxisSecondaryAxis_Click(object sender, EventArgs e)
+        {
+            // Index #23 is semiaxis
+            AddSecondarySeries(23);
+        }
+
         private void ResetSeries()
         {
             // Clear plot points serie
             _plotPointsSerie.Clear();
+            _plotPointsSerieSecondary.Clear();
 
             //TLE_individualSat_ListProcessed.Clear();
             repeated_data = 0;
@@ -345,7 +462,17 @@ namespace SatSim.Forms
             MainPlotModel.Annotations.Clear();
             MainPlotModel.Axes[0].Reset();
             MainPlotModel.Axes[1].Reset();
+            MainPlotModel.Axes[2].Reset();
             HistoricDataPlotView.InvalidatePlot(true);
+        }
+
+        private void ResetSecondarySeries()
+        {
+            _plotPointsSerieSecondary.Clear();
+            MainPlotModel.Axes[2].Reset();
+            HistoricDataPlotView.InvalidatePlot(true);
+            MainPlotModel.Series.RemoveAt(1);
+            _isSecondaryDataLoaded = false;
         }
 
         #endregion
